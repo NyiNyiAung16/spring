@@ -21,12 +21,22 @@ import RightSide from '../components/RightSide'
 import Middle from '../components/Middle'
 import LeftSide from '../components/LeftSide'
 import Navbar from '../components/Navbar'
+import { watch } from 'vue'
+import { useRouter } from 'vue-router'
+import user  from '../composables/getUser'
 export default {
   components: {
     RightSide,
     Middle,
     LeftSide, Navbar },
   name: 'Home',
+  setup(){
+    
+    let router = useRouter();
+    watch(user, () => {
+      router.push('/createAccount');
+    })
+  }
 }
 </script>
 <style scoped>

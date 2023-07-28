@@ -4,8 +4,8 @@
     <h3 class="text-xl text-gray-400">Pages and Profile</h3>
     <div class="profile mt-2">
       <div class="icon flex items-center">
-          <img src="../assets/4.jpg" alt="img" class="mr-1">
-          <span>Nyi Nyi</span>
+          <img :src="photoUrl" alt="img" class="mr-1">
+          <span>{{ profileName }}</span>
       </div>
       <div class="ml-4">
           <p class="icon"><font-awesome-icon icon="fa-solid fa-bell" class="mr-1 text-xl text-green-400" />alert</p>
@@ -41,8 +41,17 @@
 </template>
 
 <script>
+import { auth } from '../firebase/config'
 export default {
+    setup(){
 
+      let user = auth.currentUser;
+      let profileName = user.displayName;
+      let photoUrl = user.photoURL;
+
+      return { profileName, photoUrl }
+
+    }
 }
 </script>
 

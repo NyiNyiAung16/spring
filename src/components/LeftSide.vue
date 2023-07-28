@@ -1,29 +1,29 @@
 <template>
     <div class="leftSide bg-gray-800 text-gray-400 p-2 flex flex-col items-center sm:items-start">
-        <div class="left flex flex-col">
+        <div class="left flex flex-col items-center">
             <router-link to="/" >
-            <div class="home">
-                <font-awesome-icon icon="fa-solid fa-home"   class="text-blue-500 text-3xl sm:text-2xl ml-1" /> <span class="hidden sm:inline">Home</span>
-            </div>
-        </router-link>
+                <div class="home">
+                    <font-awesome-icon icon="fa-solid fa-home"   class="text-blue-500 text-3xl sm:text-2xl ml-1" /> <span class="hidden sm:inline">Home</span>
+                </div>
+            </router-link>
 
-        <router-link to="/profile" >
-            <div class="home">
-                <font-awesome-icon icon="fa-solid fa-user-circle" class="text-green-500 text-3xl sm:text-2xl ml-1" /> <span class="hidden sm:inline">Profile</span>
-            </div>
-        </router-link>
+            <router-link to="/profile" >
+                <div class="home">
+                    <font-awesome-icon icon="fa-solid fa-user-circle" class="text-green-500 text-3xl sm:text-2xl ml-1" /> <span class="hidden sm:inline">Profile</span>
+                </div>
+            </router-link>
 
-        <router-link to="/watch" >
-        <div class="home">
-            <font-awesome-icon icon="fa-solid fa-tv"  class="text-orange-500 text-3xl sm:text-2xl ml-1" /> <span class="hidden sm:inline">Watch</span>
-            </div>
-        </router-link>
+            <router-link to="/watch" >
+                <div class="home">
+                    <font-awesome-icon icon="fa-solid fa-tv"  class="text-orange-500 text-3xl sm:text-2xl ml-1" /> <span class="hidden sm:inline">Watch</span>
+                </div>
+            </router-link>
 
-        <router-link to="/">
-            <div class="home">
-                <font-awesome-icon icon="fa-solid fa-users-rectangle"  class="text-red-500 text-3xl sm:text-2xl ml-1" /> <span class="hidden sm:inline">Group</span>
-            </div>
-        </router-link>
+            <router-link to="/">
+                <div class="home">
+                    <font-awesome-icon icon="fa-solid fa-users-rectangle"  class="text-red-500 text-3xl sm:text-2xl ml-1" /> <span class="hidden sm:inline">Group</span>
+                </div>
+            </router-link>
         </div>
     </div>
 </template>

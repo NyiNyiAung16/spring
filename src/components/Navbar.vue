@@ -11,19 +11,31 @@
         <div class="text-gray-300 cursor-pointer ">
             <font-awesome-icon icon="fa-brands fa-facebook-messenger" size="xl" class="mr-4 icon text-white" />
             <font-awesome-icon icon="fa-solid fa-bell" size="xl" class="mr-4 icon text-white" />
-            <font-awesome-icon icon="fa-solid fa-user-circle" size="xl" class="icon text-white" />
+            <div class="profileContainer inline">
+                <font-awesome-icon icon="fa-solid fa-user-circle" size="xl" class="icon text-white" />
+                
+                <ul class="profileHover">
+                    <li class="hover:text-green-200 hover:underline">Profile</li>
+                    <button class="border border-none p-1 rounded-md hover:text-orange-300 hover:bg-gray-400" @click="Logout">Logout</button>
+                </ul>
+            </div>
+            
         </div>
   </div>
 </template>
 
 <script>
 import { ref } from 'vue'
+import logout from '../composables/logout'
 export default {
     setup(){
         const searchFilter=ref('');
 
+        const Logout = () => {
+             logout();
+        }
 
-        return { searchFilter }
+        return { searchFilter, Logout }
     }
 }
 </script>
@@ -54,7 +66,32 @@ export default {
     input:focus{
         outline: none;
     }
+    .profileContainer{
+        position: relative;
+        padding: 10px 0px;
+    }
+    .profileContainer:hover .profileHover{
+        display: block;
+    }
+    .profileHover{
+        max-width: 100px;
+        position: absolute;
+        right: 0;
+        display: none;
+        border-radius: 10px;
+        padding: 5px 15px;
+        background-color: gray;
+        text-align: center;
+    }
+
+
+
+
+
+
+
     ::placeholder{
         font-size: 1.1rem;
     }
+
 </style>

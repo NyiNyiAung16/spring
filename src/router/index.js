@@ -2,22 +2,61 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import Profile from '../views/Profile.vue'
 import Watch from '../views/Watch.vue'
+import UserAccount from '../views/UserAccount.vue'
+import { auth } from '@/firebase/config'
 
 const routes = [
   {
     path: '/',
     name: 'home',
-    component: Home
+    component: Home,
+    beforeEnter(to,from,next){
+      let user = auth.currentUser;
+      if(user){
+        next();
+      }else{
+        next('/createAccount');
+      }
+    }
   },
   {
     path:'/profile',
     name: 'profile',
-    component:Profile
+    component:Profile,
+    beforeEnter(to,from,next){
+      let user = auth.currentUser;
+      if(user){
+        next();
+      }else{
+        next('/createAccount');
+      }
+    }
   },
   {
     path:'/watch',
     name:'watch',
-    component:Watch
+    component:Watch,
+    beforeEnter(to,from,next){
+      let user = auth.currentUser;
+      if(user){
+        next();
+      }else{
+        next('/createAccount');
+      }
+    }
+  },
+  {
+    path:'/createAccount',
+    name:'createAccount',
+    component:UserAccount,
+    beforeEnter(to,from,next){
+      let user = auth.currentUser;
+      if(!user){
+        next();
+      }else{
+        next('/');
+      }
+    }
   }
 ]
 

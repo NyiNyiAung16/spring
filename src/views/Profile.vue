@@ -1,6 +1,5 @@
 <template>
     <div class="formController ">
-        <h3 class="text-center text-3xl text-blue-700">Create Profile</h3>
         <CreateProfile></CreateProfile>
     </div>
 </template>
@@ -20,11 +19,5 @@ export default {
         background: url(../assets/7.jpg);
         background-origin: border-box;
         background-size: cover;
-    }
-    h3{
-        max-width: 300px;
-        padding: 10px;
-        margin: auto;
-        margin-bottom: 20px;
     }
 </style>
