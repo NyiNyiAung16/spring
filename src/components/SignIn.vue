@@ -29,7 +29,7 @@
 import { ref } from 'vue'
 import createUser from '../composables/createUser'
 import { useRouter } from 'vue-router'
-import { storage, uploadBytes , getDownloadURL, ref as storageReference, addDoc } from '../firebase/config'
+import { storage, uploadBytes , getDownloadURL, ref as storageReference, addDoc,db,collection } from '../firebase/config'
 export default {
     setup(props,context){
         let displayName = ref('');
@@ -58,10 +58,15 @@ export default {
         }
 
         //submit siginform
+        let colRef = collection(db,'authCollection');
         let router = useRouter();
         let {error,SignIn} = createUser();
         let CreateAccount = async() => {
             await SignIn(email.value,password.value,displayName.value,url.value);
+            await addDoc(colRef,{
+                userName:displayName.value,
+                photo:url.value
+            })
             email.value='',
             password.value='',
             displayName.value='',

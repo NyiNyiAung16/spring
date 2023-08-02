@@ -6,7 +6,9 @@ import {
   signInWithEmailAndPassword,
   onAuthStateChanged,
   signOut,
-  updateEmail
+  updateEmail,
+  updatePassword,
+  sendPasswordResetEmail
  } from "firebase/auth"
 
 import { 
@@ -26,8 +28,11 @@ import {
   getStorage,
   ref ,
   uploadBytes,
-  getDownloadURL
+  getDownloadURL,
+  uploadBytesResumable,
+  deleteObject
  } from 'firebase/storage'
+
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -54,4 +59,4 @@ const storage = getStorage(app);
 
 
 
-export { auth, createUserWithEmailAndPassword, updateProfile, updateEmail, signInWithEmailAndPassword, onAuthStateChanged, signOut, colRef, addDoc, collection, serverTimestamp, getDocs, onSnapshot, q, doc, deleteDoc, db, updateDoc, storage, ref, getDownloadURL, uploadBytes };
+export { auth, createUserWithEmailAndPassword, updateProfile, updateEmail, signInWithEmailAndPassword, onAuthStateChanged, signOut, colRef, addDoc, collection, serverTimestamp, getDocs, onSnapshot, q, doc, deleteDoc, db, updateDoc, storage, ref, getDownloadURL, uploadBytes, orderBy, query, uploadBytesResumable, deleteObject, sendPasswordResetEmail, updatePassword };

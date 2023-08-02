@@ -1,24 +1,7 @@
 <template>
     <div class="middleController bg-gray-800 p-3">
-        <div class="flex gap-2">
-            <div class="postBox">
-                <img :src="photoUrl" alt="img1">
-                <p class="text-white font-bold">make stories</p>
-            </div>
-            <div class="postBox">
-                <img src="../assets/2.jpg" alt="img1">
-                <p class="text-white font-bold">Nyi Nyi</p>
-            </div>
-            <div class="postBox">
-                <img src="../assets/6.jpg" alt="img1">
-                <p class="text-white font-bold">Aung Aung</p>
-            </div>
-            <div class="postBox">
-                <img src="../assets/5.jpeg" alt="">
-                <p class="text-white font-bold">Mg Mg</p>
-            </div>
-            
-        </div>
+        
+        <Stories></Stories>
 
         <div class="mt-3 bg-gray-600 px-3 py-2 border rounded-md border-none box-border">
             <div class="first flex">
@@ -44,8 +27,8 @@
         <div class="second text-white bg-gray-600 p-2 border rounded-md border-none mt-3" v-for="GetData in GetDatas" :key="GetData.time">
             <div class="flex items-center justify-between mb-3">
                 <div class="flex items-center">
-                    <img :src="photoUrl" alt="">
-                    <span class="ml-1">{{profileName}}</span>
+                    <img :src="GetData.imagePath" alt="">
+                    <span class="ml-1">{{GetData.userName}}</span>
                 </div>
                 <div class="editController">
                     <font-awesome-icon icon="fa-solid fa-ellipsis-vertical" class=" p-2 border border-none rounded-lg  hover:bg-gray-500  text-violet-400 cursor-pointer" />
@@ -77,14 +60,28 @@
 </template>
 
 <script>
-import { onMounted, ref } from 'vue'
-import { colRef, serverTimestamp, addDoc, onSnapshot, q, doc, deleteDoc, db, updateDoc, collection, auth } from '../firebase/config'
+import Stories from './Stories'
+import { ref } from 'vue'
+import { colRef, serverTimestamp, addDoc, onSnapshot, q, doc, deleteDoc, db, updateDoc, auth } from '../firebase/config'
 export default {
+  components: { Stories },
     setup(){
         const post=ref('');
         const GetDatas=ref([]);
+
+         //add profile image
+        let photoUrl=ref('');
+        let profileName=ref('');
+        let user= auth.currentUser;
+        photoUrl.value=user.photoURL;
+        profileName.value=user.displayName;
+
+
+
         let postData =async () => {
             await addDoc(colRef,{
+                userName:profileName.value,
+                imagePath:photoUrl.value,
                 message:post.value,
                 time:serverTimestamp()
             });
@@ -110,24 +107,8 @@ export default {
             })
         }
 
-        //profile data
-        // onMounted(()=>{
-        //     let colRef=collection(db,'imageCollection');
-        //     onSnapshot(colRef,(res)=>{
-        //         GetDatas.value.push(res.docs.filter((doc)=>{
-        //             return doc.id;
-        //         }))
-        //         console.log(GetDatas.value);
-        //     })
-            
-        // })
-
-        //add profile image
-        let photoUrl=ref('');
-        let profileName=ref('');
-        let user= auth.currentUser;
-        photoUrl.value=user.photoURL;
-        profileName.value=user.displayName;
+        
+       
 
         
         return { post, postData, GetDatas, Delete, EditDoc, photoUrl, profileName }
@@ -136,19 +117,7 @@ export default {
 </script>
 
 <style scoped>
-    .postBox{
-        width: 90px;
-        height: 150px;
-        background-color: gray;
-        border-radius: 5px;
-        text-align: center;
-    }
-    .postBox img{
-        width: 100%;
-        height: 100px;
-        object-fit: cover;
-        border-radius: 5px 5px 0px 0px;
-    }
+   
     .first{
         padding-bottom: 5px;
         border-bottom: 2px solid gray;
@@ -226,12 +195,17 @@ export default {
 
 
 
-
     /* responsive style */
     @media (max-width:630px) {
         .middleController{
             max-width: 450px;
             margin-right: 20px;
+        }
+    }
+    @media (max-width:600px) {
+        .middleController{
+            max-width: 100%;
+            margin-right: 0;
         }
     }
 

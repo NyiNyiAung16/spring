@@ -3,6 +3,7 @@ import Home from '../views/Home.vue'
 import Profile from '../views/Profile.vue'
 import Watch from '../views/Watch.vue'
 import UserAccount from '../views/UserAccount.vue'
+import Chatroom from '../views/Chatroom.vue'
 import { auth } from '@/firebase/config'
 
 const routes = [
@@ -20,8 +21,8 @@ const routes = [
     }
   },
   {
-    path:'/profile',
-    name: 'profile',
+    path:'/updateProfile',
+    name: 'updateProfile',
     component:Profile,
     beforeEnter(to,from,next){
       let user = auth.currentUser;
@@ -36,6 +37,19 @@ const routes = [
     path:'/watch',
     name:'watch',
     component:Watch,
+    beforeEnter(to,from,next){
+      let user = auth.currentUser;
+      if(user){
+        next();
+      }else{
+        next('/createAccount');
+      }
+    }
+  },
+  {
+    path:'/chatroom',
+    name:'chatroom',
+    component:Chatroom,
     beforeEnter(to,from,next){
       let user = auth.currentUser;
       if(user){

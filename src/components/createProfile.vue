@@ -1,15 +1,15 @@
 <template>
     <div class="gap"></div>
-    <form enctype="multipart/form-data" class="bg-gray-400 " @submit.prevent="profileSubmit">
+    <form enctype="multipart/form-data" class="bg-gray-800 " @submit.prevent="profileSubmit">
         <div class="first flex items-center gap-7">
             <img :src="url" alt="profileImg">
-            <h3 class="text-3xl font-bold text-cyan-400">Update Profile</h3>
+            <h3 class="text-4xl font-bold text-cyan-400">Update Profile</h3>
         </div>
         <div>
-            <label >Email</label>
-            <input type="email" required v-model="email">
             <label>Name</label>
             <input type="text" required v-model="name">
+            <label >Email</label>
+            <input type="email" required v-model="email">
             <label>Upload Image</label>
             <input type="file" id="file" accept="image/*" @change="fileImage">
             <div class="fileController flex items-center">
@@ -17,7 +17,7 @@
                 <label for="file">Choose a file</label>
             </div>
             <p class="text-center text-lg text-blue-500 font-bold py-2">{{ ImageLoad }}</p>
-            <button>Update Profile</button>
+            <button class="font-bold hover:text-black">Update Profile</button>
         </div>
     </form>
 </template>
@@ -69,12 +69,15 @@ export default {
 </script>
 
 <style scoped>
+    h3,button{
+        font-family: 'arima';
+    }
     .gap{
         width: 100%;
         height: 100px;
     }
     form{
-        max-width: 450px;
+        max-width: 480px;
         padding: 15px;
         border-radius: 5px;
         box-sizing: border-box;

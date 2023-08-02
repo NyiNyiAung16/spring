@@ -1,13 +1,13 @@
 <template>
     <div class="leftSide bg-gray-800 text-gray-400 p-2 flex flex-col items-center sm:items-start">
-        <div class="left flex flex-col items-center">
+        <div class="left flex flex-col ">
             <router-link to="/" >
                 <div class="home">
                     <font-awesome-icon icon="fa-solid fa-home"   class="text-blue-500 text-3xl sm:text-2xl ml-1" /> <span class="hidden sm:inline">Home</span>
                 </div>
             </router-link>
 
-            <router-link to="/profile" >
+            <router-link to="/updateProfile" >
                 <div class="home">
                     <font-awesome-icon icon="fa-solid fa-user-circle" class="text-green-500 text-3xl sm:text-2xl ml-1" /> <span class="hidden sm:inline">Profile</span>
                 </div>
@@ -19,9 +19,9 @@
                 </div>
             </router-link>
 
-            <router-link to="/">
+            <router-link to="/chatroom">
                 <div class="home">
-                    <font-awesome-icon icon="fa-solid fa-users-rectangle"  class="text-red-500 text-3xl sm:text-2xl ml-1" /> <span class="hidden sm:inline">Group</span>
+                    <font-awesome-icon icon="fa-solid fa-users-rectangle"  class="text-red-500 text-3xl sm:text-2xl ml-1" /> <span class="hidden sm:inline">Chat</span>
                 </div>
             </router-link>
         </div>
@@ -57,4 +57,19 @@ export default {
     .home:hover{
         background-color: gray;
     }
+    @media (max-width:600px) {
+        .left{
+            width: 100%;
+            flex-direction: row;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+        }  
+        .leftSide a.router-link-active{
+            border: none;
+        }
+        .leftSide a:not(:last-child){
+            margin-bottom: 0px;
+    }
+  }
 </style>

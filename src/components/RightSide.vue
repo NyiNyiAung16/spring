@@ -1,53 +1,36 @@
 <template>
   <div class="rightController">
-      <div class="rightSide bg-gray-800 px-5 py-2 text-white">
-    <h3 class="text-xl text-gray-400">Pages and Profile</h3>
-    <div class="profile mt-2">
-      <div class="icon flex items-center">
-          <img :src="photoUrl" alt="img" class="mr-1">
-          <span>{{ profileName }}</span>
-      </div>
-      <div class="ml-4">
-          <p class="icon"><font-awesome-icon icon="fa-solid fa-bell" class="mr-1 text-xl text-green-400" />alert</p>
-          <p class="icon"><font-awesome-icon icon="fa-solid fa-user-circle" class="mr-1 text-xl text-orange-400" />alert</p>
-          <p class="icon"><font-awesome-icon icon="fa-solid fa-bullhorn" class="mr-1 text-xl text-blue-400" />alert</p>
-      </div>
-    </div>
-
-    <div class="contact py-3 px-2">
-        <div class="flex justify-between">
-          <p class="text-xl">Contacts</p>
-          <div class="flex gap-2">
-            <font-awesome-icon icon="fa-solid fa-video" class="icon text-green-400 cursor-pointer" />
-            <font-awesome-icon icon="fa-solid fa-search" class="icon text-blue-400 cursor-pointer" />
-            <font-awesome-icon icon="fa-solid fa-ellipsis-vertical" class="icon text-violet-400 cursor-pointer" />
+    <div class="rightSide bg-gray-800 px-5 py-2 text-white">
+        <h3 class="text-xl text-gray-400">Pages and Profile</h3>
+      <div class="profile mt-2">
+          <div class=" profileName flex items-center">
+            <img :src="photoUrl" alt="img" class="mr-1">
+            <span>{{ profileName }}</span>
           </div>
+        <div class="ml-4">
+            <p class="icon"><font-awesome-icon icon="fa-solid fa-bell" class="mr-1 text-xl text-green-400" />alert</p>
+            <p class="icon"><font-awesome-icon icon="fa-solid fa-user-circle" class="mr-1 text-xl text-orange-400" />user</p>
+            <p class="icon"><font-awesome-icon icon="fa-solid fa-bullhorn" class="mr-1 text-xl text-blue-400" />horn</p>
         </div>
-        <div class="contactBox flex items-center gap-2 mb-3 cursor-pointer">
-          <img src="../assets/2.jpg" alt="img">
-          <span>HanNi Nway Oo</span>
-        </div>
-        <div class="contactBox flex items-center gap-2  mb-3 cursor-pointer">
-          <img src="../assets/5.jpeg" alt="img">
-          <span>Nan Su Pearl Htet</span>
-        </div>
-        <div class="contactBox flex items-center gap-2 cursor-pointer">
-          <img src="../assets/6.jpg" alt="img">
-          <span>Nan Su</span>
-        </div>
+      </div>
+
+      <Contact></Contact>
+      
     </div>
-  </div>
   </div>
 </template>
 
 <script>
+import Contact from './Contact'
 import { auth } from '../firebase/config'
 export default {
+  components: { Contact },
     setup(){
 
       let user = auth.currentUser;
       let profileName = user.displayName;
       let photoUrl = user.photoURL;
+
 
       return { profileName, photoUrl }
 
@@ -68,6 +51,17 @@ export default {
   .profile{
     border-bottom: 2px solid gray;
   }
+  .profileName{
+    max-width: 200px;
+    margin-bottom: 2px;
+    padding:7px 10px;
+    border-radius: 10px;
+    background-color: inherit;
+    transition: all 0.6s ease-in;
+  }
+  .profileName:hover{
+     background-color: gray;
+  }
   .profile img{
     width: 40px;
     height: 40px;
@@ -80,6 +74,7 @@ export default {
     padding:7px 10px;
     border-radius: 10px;
     background-color: inherit;
+    transition: all 0.6s ease-in;
   }
   .profile .icon:hover{
     background-color: gray;

@@ -46,12 +46,22 @@ export default {
     grid-template-columns: 20% 50% 27%;
     gap: 20px;
   }
+  .navbarLeft{
+    display: none;
+  }
   @media (max-width:840px) {
     .MainBody{
       grid-template-columns: 20% 80%;
     }
     .rightSide{
       display: none;
+    }
+  }
+  @media (max-width:600px) {
+    .MainBody{
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
   }
 </style>
