@@ -37,4 +37,11 @@ export default {
         border-radius: 3px;
     }
 
+    @media (max-width:620px) {
+        .chatroom{
+            max-width: 580px;
+            margin: 20px 10px;
+        }
+    }
+
 </style>

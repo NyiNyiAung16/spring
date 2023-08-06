@@ -2,11 +2,7 @@
     <div class="contact py-3 px-2">
         <div class="flex justify-between">
             <p class="text-xl">Contacts</p>
-            <div class="flex gap-2">
-              <font-awesome-icon icon="fa-solid fa-video" class="icon text-green-400 cursor-pointer" />
-              <font-awesome-icon icon="fa-solid fa-search" class="icon text-blue-400 cursor-pointer" />
-              <font-awesome-icon icon="fa-solid fa-ellipsis-vertical" class="icon text-violet-400 cursor-pointer" />
-            </div>
+            <font-awesome-icon icon="fa-solid fa-xmark" class="icon text-red-400 cursor-pointer" @click="contactBox" />
         </div>
         <div class="contactBox flex items-center gap-2 mb-3 cursor-pointer" v-for="contact in contacts" :key="contact.id">
           <img :src="contact.photo" alt="img">
@@ -19,7 +15,7 @@
 import { ref } from 'vue';
 import { onSnapshot, db, collection } from '../firebase/config'
 export default {
-    setup(){
+    setup(props,context){
         let contacts = ref([]);
         let colRef = collection(db,'authCollection');
 
@@ -32,14 +28,18 @@ export default {
             contacts.value = results.value;
         })
 
+        let contactBox = () => {
+          context.emit('hide')
+        }
 
-        return { contacts };
+
+        return { contacts, contactBox };
     }
 }
 </script>
 
 <style scoped>
-    .contact .icon{
+  .contact .icon{
     max-width: 150px;
     margin-bottom: 2px;
     padding:7px;
@@ -47,7 +47,8 @@ export default {
     background-color: inherit;
   }
   .contact .icon:hover{
-    background-color: gray;
+    background-color: rgb(189, 28, 28);
+    color: white;
   }
   .contact img{
     width: 40px;

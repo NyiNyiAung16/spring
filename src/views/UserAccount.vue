@@ -1,9 +1,9 @@
 <template>
     <div class="userAccount">
-        <div v-if="LoginBox">
+        <div v-if="LoginBox" class="mx-3">
             <Login @switchSignIn="LoginBox=!LoginBox"></Login>
         </div>
-        <div v-else>
+        <div v-else class="mx-3">
             <SignIn @switchLogin="LoginBox=!LoginBox"></SignIn>
         </div>
     </div>

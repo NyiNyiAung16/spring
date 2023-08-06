@@ -7,12 +7,6 @@
                 </div>
             </router-link>
 
-            <router-link to="/updateProfile" >
-                <div class="home">
-                    <font-awesome-icon icon="fa-solid fa-user-circle" class="text-green-500 text-3xl sm:text-2xl ml-1" /> <span class="hidden sm:inline">Profile</span>
-                </div>
-            </router-link>
-
             <router-link to="/watch" >
                 <div class="home">
                     <font-awesome-icon icon="fa-solid fa-tv"  class="text-orange-500 text-3xl sm:text-2xl ml-1" /> <span class="hidden sm:inline">Watch</span>
@@ -22,6 +16,12 @@
             <router-link to="/chatroom">
                 <div class="home">
                     <font-awesome-icon icon="fa-solid fa-users-rectangle"  class="text-red-500 text-3xl sm:text-2xl ml-1" /> <span class="hidden sm:inline">Chat</span>
+                </div>
+            </router-link>
+
+            <router-link to="/updateProfile" >
+                <div class="home">
+                    <font-awesome-icon icon="fa-solid fa-user-circle" class="text-green-500 text-3xl sm:text-2xl ml-1" /> <span class="hidden sm:inline">Update Profile</span>
                 </div>
             </router-link>
         </div>

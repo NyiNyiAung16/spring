@@ -33,7 +33,8 @@ export default {
 
 <style scoped>
     .submitNav{
-        width: 100%;
+        width: 100%;    
+        border-radius: 0px 0px 5px 5px;
         box-sizing: border-box;
         background-color: gray;
         display: flex;

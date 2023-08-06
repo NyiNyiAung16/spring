@@ -1,17 +1,16 @@
 <template>
    
     <div class="formController">
-        <div v-if="!showUpdate">
+        <div v-if="!showUpdate" class="mx-2">
             <CreateProfile></CreateProfile>
         </div>
-        <div v-if="showUpdate">
+        <div v-if="showUpdate" class="mx-2">
             <ChangePs></ChangePs>
         </div>
-        <div class="icon items-center mt-4">
+        <div class="icon items-center mt-4 mx-2">
             <p class="text-lg text-blue-500 font-bold">If you want to change password, click the icon.</p>
             <font-awesome-icon icon="fa-solid fa-lock" size="2xl" @click="showUpdate=!showUpdate" class="mb-2 cursor-pointer" />
         </div>
-        
     </div>
 </template>
 

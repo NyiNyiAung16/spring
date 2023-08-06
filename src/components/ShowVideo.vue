@@ -82,6 +82,7 @@ export default {
     }
     .videoBox video{
         width: 100%;
+        max-height: 250px;
         background-color: black;
         padding: 30px 0px;
     }

@@ -6,7 +6,7 @@
         <div class="mt-3 bg-gray-600 px-3 py-2 border rounded-md border-none box-border">
             <div class="first flex">
                 <img :src="photoUrl" alt="" width="50px">
-                <input type="text" :placeholder="`What are you thinking?...${profileName}`" v-model="post" @keydown.enter="postData">
+                <input type="text" :placeholder="`What are you thinking?...${profileName}`" v-model="post" @keypress.enter="postData">
             </div>
             <div class="createController flex justify-between px-2 mt-2">
                 <div class="create flex items-center cursor-pointer">
@@ -24,7 +24,7 @@
             </div>
         </div>
 
-        <div class="second text-white bg-gray-600 p-2 border rounded-md border-none mt-3" v-for="GetData in GetDatas" :key="GetData.time">
+        <div class="second text-white bg-gray-600 p-2 border rounded-md border-none mt-3" v-for="GetData in GetDatas" :key="GetData.id">
             <div class="flex items-center justify-between mb-3">
                 <div class="flex items-center">
                     <img :src="GetData.imagePath" alt="">

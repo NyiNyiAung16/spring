@@ -20,7 +20,7 @@
             <p class="text-center text-lg text-blue-500 font-bold py-2">{{ imageLoading }}</p>
             <p class="text-center font-bold mt-2">{{error}}</p>
             <button>SignIn</button>
-            <p class="text-center text-lg md:text-xl mt-2 font-bold">If you have already an account?<span class="text-blue-700 cursor-pointer" @click="switchLogin"> Login</span> here</p>
+            <p class="text-center text-md md:text-xl mt-2 font-bold">If you have already an account?<span class="text-blue-700 cursor-pointer" @click="switchLogin"> Login</span> here</p>
         </div>
     </form>
 </template>
@@ -62,11 +62,13 @@ export default {
         let router = useRouter();
         let {error,SignIn} = createUser();
         let CreateAccount = async() => {
-            await SignIn(email.value,password.value,displayName.value,url.value);
-            await addDoc(colRef,{
+            let res = await SignIn(email.value,password.value,displayName.value,url.value);
+            if(res){
+                await addDoc(colRef,{
                 userName:displayName.value,
                 photo:url.value
             })
+            }
             email.value='',
             password.value='',
             displayName.value='',

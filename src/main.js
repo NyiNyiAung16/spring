@@ -12,12 +12,12 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 /* import specific icons */
-import { faSearch , faUserCircle, faBell, faHome,faTv, faUsersRectangle, faVideo, faImage, faFaceSmile,faThumbsUp, faComment, faShare, faBullhorn, faEllipsisVertical, faTrash, faPen, faFileExport, faPlus, faCircleArrowRight, faLock  } from '@fortawesome/free-solid-svg-icons'
+import { faSearch , faUserCircle, faBell, faHome,faTv, faUsersRectangle, faVideo, faImage, faFaceSmile,faThumbsUp, faComment, faShare, faBullhorn, faEllipsisVertical, faTrash, faPen, faFileExport, faPlus, faCircleArrowRight, faLock, faXmark  } from '@fortawesome/free-solid-svg-icons'
 import { faFacebook, faFacebookMessenger } from '@fortawesome/free-brands-svg-icons'
 import { faCommentDots } from '@fortawesome/free-regular-svg-icons'
 
 /* add icons to the library */
-library.add(faSearch, faFacebook, faUserCircle, faFacebookMessenger, faBell, faHome,faTv, faUsersRectangle, faVideo, faImage, faFaceSmile, faThumbsUp, faComment, faShare, faBullhorn, faEllipsisVertical, faTrash, faPen, faFileExport, faPlus, faCircleArrowRight, faLock, faCommentDots)
+library.add(faSearch, faFacebook, faUserCircle, faFacebookMessenger, faBell, faHome,faTv, faUsersRectangle, faVideo, faImage, faFaceSmile, faThumbsUp, faComment, faShare, faBullhorn, faEllipsisVertical, faTrash, faPen, faFileExport, faPlus, faCircleArrowRight, faLock, faCommentDots, faXmark)
 
 
 

@@ -104,7 +104,7 @@ export default {
     }
     .postBox .plus{
         position: absolute;
-        left: 30%;
+        left: 40%;
         top: 70%;
     }
     .postBox img{
@@ -135,6 +135,12 @@ export default {
     @media (max-width:420px) {
         .postBox p{
             font-size: 13px;
+        }
+    }
+    @media (max-width: 474px) {
+        .postBox .plus{
+            left: 30%;
+            top: 60%;
         }
     }
 </style>

@@ -9,7 +9,7 @@
         <router-link to="/chatroom" title="chatroom">
             <font-awesome-icon icon="fa-solid fa-users-rectangle" class="text-2xl lg:text-3xl text-orange-300 icon" />
         </router-link>
-        <router-link to="/profile" title="profile">
+        <router-link to="/updateProfile" title="updateProfile">
             <font-awesome-icon icon="fa-solid fa-user-circle" class="text-2xl lg:text-3xl text-violet-300 icon" />
         </router-link>
     </div>        

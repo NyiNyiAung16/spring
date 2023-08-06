@@ -1,22 +1,39 @@
 <template>
   <div class="Navbar flex shadow-xl justify-between items-center px-3 py-2 bg-gray-800">
         <div class="flex gap-4 items-center">
-            <h3 class="text-xl sm:text-2xl text-white font-bold ">Facebook</h3>
-            <font-awesome-icon icon="fa-solid fa-search" size="lg" class="inline md:hidden text-gray-300 icon " @click="searchShow=!searchShow" v-if="!searchShow" />
+            <h3 class="text-xl sm:text-2xl text-gray-300 tracking-wide">SPR<span class="text-blue-500 font-bold">ING</span></h3>
+            <font-awesome-icon icon="fa-solid fa-search" size="lg" class="inline md:hidden text-gray-300 icon " @click="smallSearch=!smallSearch" v-if="!smallSearch"  />
         </div>
-        <!-- search bar small show -->
+        <div class="search" >
+             <!-- search bar small show -->
+            <div class="smallBar bg-gray-500 p-2 border border-none rounded-lg block md:hidden " v-if="smallSearch">
+                <font-awesome-icon icon="fa-solid fa-search" size="lg" class="text-gray-300"/>
+                <input type="text" class="bg-inherit ml-2 " placeholder="search in spring" v-model="searchFilter" @keypress.enter="searchUser(searchFilter)" >
+            </div>
+            <!-- larger search bar -->
+            <div class="searchBar bg-gray-500 p-2 border border-none rounded-lg ">
+                <font-awesome-icon icon="fa-solid fa-search" size="lg" class="text-gray-300"/>
+                <input type="text" class="bg-inherit ml-2 " placeholder="search in spring" v-model="searchFilter" @keypress.enter="searchUser(searchFilter)">
+            </div>
+            <div v-if="searchShow" class="searchName bg-gray-800 ">
+                <div class="loopSearch m-1 p-2 border border-none flex items-center justify-between " v-for="name in filterNames" :key="name.id" >
+                    <div class="flex items-center gap-1">
+                        <img :src="name.photo" alt="searchImage">
+                        <span class="text-blue-400 text-lg">{{name.userName}}</span>
+                    </div>
+                    <div>
+                        <font-awesome-icon icon="fa-solid fa-xmark" size="lg" class="text-white hover:text-red-700 cursor-pointer" @click="searchShow=false" />
+                    </div>
+                </div>
+            </div>
+            <div class="searchNone bg-gray-800 flex items-center justify-between " v-if="NothingSearch">
+                <span class=" text-white text-lg ">nothing to search</span>
+                <font-awesome-icon icon="fa-solid fa-xmark" size="lg" class="text-white hover:text-red-700 cursor-pointer" @click="NothingSearch=false" />
+            </div>
+        </div>
 
-         <div class="smallBar bg-gray-500 p-2 border border-none rounded-lg block md:hidden " v-if="searchShow">
-            <font-awesome-icon icon="fa-solid fa-search" size="lg" class="text-gray-300"/>
-            <input type="text" class="bg-inherit ml-2 " placeholder="search in facebook" v-model="searchFilter">
-        </div>
-        
-        <!-- search bar small show -->
-        <div class="searchBar bg-gray-500 p-2 border border-none rounded-lg ">
-            <font-awesome-icon icon="fa-solid fa-search" size="lg" class="text-gray-300"/>
-            <input type="text" class="bg-inherit ml-2 " placeholder="search in facebook" v-model="searchFilter">
-        </div>
-        <div class=" text-gray-300 cursor-pointer flex items-center relative" :class="{icons:searchShow}">
+        <!-- right icon section -->
+        <div class=" text-gray-300 cursor-pointer flex items-center relative" :class="{icons:searchShow}" v-if="!smallSearch">
             <router-link to="/chatroom" class="chatroom" >
                 <font-awesome-icon :icon="['far', 'comment-dots']"  size="xl" class="mr-4 icon text-white" />
             </router-link>
@@ -27,16 +44,15 @@
                 <img :src="NavbarUrl" alt="NavbarImage" class="navbarImg">
                 
                 <ul class="profileHover">
-                    <li class="hover:text-green-200 hover:underline"><router-link to="/updateProfile">Profile</router-link></li>
+                    <li class="text-sm hover:text-green-200 hover:underline"><router-link to="/updateProfile">Update Profile</router-link></li>
                     <li class="block md:hidden cursor-pointer hover:text-blue-400" @click="contactShow=!contactShow">Contact</li>
                     <button class="border border-none p-1 rounded-md hover:text-orange-300 hover:bg-gray-400" @click="Logout">Logout</button>
                 </ul>
             </div>
             <div v-if="contactShow" class="contact  block md:hidden">
-                <Contact></Contact>
+                <Contact @hide="contactShow=!contactShow"></Contact>
             </div>
         </div>
-        
   </div>
 </template>
 
@@ -51,6 +67,8 @@ export default {
         let searchFilter=ref('');
         let contactShow = ref(false);
         let searchShow = ref(false);
+        let NothingSearch = ref(false);
+        let smallSearch=ref(false)
         const Logout = () => {
              logout();
         }
@@ -72,10 +90,26 @@ export default {
             filterUsers.value = results.value;
         })
 
+        let searchName = ref('');
+        let searchImgUrl = ref('');
+        let filterNames = ref([]);
+        let searchUser = (key) => {
+            searchShow.value = true
+            let filterName = filterUsers.value.filter((user) => {
+                return user.userName===key;
+            })
+            if(filterName.length > 0){
+                NothingSearch.value = false;
+                filterNames.value = filterName
+            }else{
+                searchShow.value = false;
+                NothingSearch.value = true;
+            } 
+        }
         
-      
+    
 
-        return { searchFilter, Logout, NavbarUrl, userName, filterUsers, contactShow, searchShow }
+        return { searchFilter,NothingSearch, Logout, NavbarUrl, userName, filterUsers, contactShow, searchShow, searchUser, searchName, searchImgUrl, filterNames, smallSearch }
     }
 }
 </script>
@@ -95,10 +129,6 @@ export default {
         width: 350px;
         display: block;
     }
-    /* .smallBar{
-        position: absolute;
-        top: 60px;
-    } */
     input{
         color: white;
     }
@@ -123,7 +153,7 @@ export default {
         display: block;
     }
     .profileHover{
-        max-width: 100px;
+        min-width: 120px;
         position: absolute;
         right: 0;
         display: none;
@@ -175,6 +205,46 @@ export default {
     @keyframes fadeShow {
         0%{ transform: translateY(0px); }
         100%{  transform: translateY(40px); }
+    }
+
+    /* search style */
+    .search{
+        position: relative;
+    }
+    .searchName{
+        width: 100%;
+        position: absolute;
+        top: 40px;
+        text-align: center;
+        margin-top: 5px;
+        border-radius: 10px;
+        animation: fade-in 0.8s ease-in;
+    }
+    .searchName img{
+        width: 40px;
+        height: 40px;
+        clip-path: circle();
+        object-fit: cover;
+    }
+
+    @keyframes fade-in {
+        from{transform: translateX(-30px);opacity: 0;}
+        to{transform: translateX(0px);opacity: 1;}
+    }
+
+    .searchNone{
+        width: 100%;
+        position: absolute;
+        padding:10px;
+        border-radius: 10px;
+        margin-top: 5px;
+    }
+    .loopSearch{
+        transition: all 0.8s linear;
+    }
+    .loopSearch:hover{
+        background-color: rgb(130, 128, 128);
+        border-radius: 5px;
     }
 
 
