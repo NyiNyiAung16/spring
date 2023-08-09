@@ -8,7 +8,7 @@
             <label>New Password</label>
             <input type="password" required v-model="newPassword">
             <p class="text-lg text-gray-400 mt-2 hover:text-red-400 cursor-pointer" @click="ResetPassword">Reset Password</p>
-            <p class="text-md text-green-400">{{reset}}</p>
+            <p class="text-md text-green-400 mt-1">{{reset}}</p>
             <button class="font-bold">Update</button>
         </form>
     </div>
@@ -33,12 +33,10 @@ export default {
             router.push('/')
         }
 
-            
-
         //forget password
         let ResetPassword =async () => {
             await sendPasswordResetEmail(auth,user.email);
-            reset.value = 'password reset is done';
+            reset.value = 'password reset is done! Go to Email and Check it out';
             setTimeout(()=>{
                 reset.value=''
             },2000)

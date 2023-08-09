@@ -7,9 +7,12 @@
         <div v-if="showUpdate" class="mx-2">
             <ChangePs></ChangePs>
         </div>
-        <div class="icon items-center mt-4 mx-2">
-            <p class="text-lg text-blue-500 font-bold">If you want to change password, click the icon.</p>
-            <font-awesome-icon icon="fa-solid fa-lock" size="2xl" @click="showUpdate=!showUpdate" class="mb-2 cursor-pointer" />
+        <div class=" icon text-center mt-4 mx-2">
+            <p class="text-md sm:text-lg text-blue-500 font-bold">If you want to change password, click the icon  >></p>
+            <font-awesome-icon icon="fa-solid fa-lock" @click="showUpdate=!showUpdate" class=" ml-1 cursor-pointer text-2xl sm:text-3xl" />
+        </div>
+        <div class="text-center text-blue-600 sm:text-blue-400 font-bold text-md sm:text-lg mt-1">
+            <p>Before your's profile update and change password , you need to <span class="underline text-red-400 ">logout</span> first!</p>
         </div>
     </div>
 </template>
@@ -45,13 +48,13 @@ export default {
         font-family: 'arima';
     }
     .icon{
-        display: flex;
-        justify-content: center;
-        gap: 10px;
         color: rgb(36, 169, 169);
         transition: all 1s linear;
     }
     .icon:hover{
         color: rgb(0, 255, 183);
+    }
+    .icon p{
+        display: inline;
     }
 </style>

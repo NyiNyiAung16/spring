@@ -72,6 +72,8 @@ export default {
         margin: auto;
     }
     .videoBox{
+        max-width: 600px;
+        min-height: 400px;
         border-radius: 5px;
     }
     .videoBox img{
@@ -82,7 +84,7 @@ export default {
     }
     .videoBox video{
         width: 100%;
-        max-height: 250px;
+        max-height: 340px;
         background-color: black;
         padding: 30px 0px;
     }
@@ -116,8 +118,12 @@ export default {
 
     /* responsive style */
     @media (max-width: 600px) {
+        .videoBox{
+            max-width: 600px;
+            min-height: 0px;
+        }
         .video{
-            padding: 0px 20px;
+            padding: 10px 20px;
         }
     }
 </style>

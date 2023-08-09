@@ -79,12 +79,14 @@ export default {
 
 
         let postData =async () => {
-            await addDoc(colRef,{
+            if(post.value){
+                await addDoc(colRef,{
                 userName:profileName.value,
                 imagePath:photoUrl.value,
                 message:post.value,
                 time:serverTimestamp()
             });
+            }
             post.value='';
         }
 
@@ -93,6 +95,7 @@ export default {
                 return { id:doc.id,...doc.data() }
             })
         })
+        
 
         const Delete =async (id) => {
             const docRef = doc(db,'postMessage', id);
@@ -102,13 +105,12 @@ export default {
         const EditDoc =async (id) => {
             let editPost = prompt('Edit Post');
             let docRef = doc(db,'postMessage',id);
-            await updateDoc(docRef,{
-                message:editPost
-            })
+            if(editPost){
+                await updateDoc(docRef,{
+                    message:editPost
+                })
+            }
         }
-
-        
-       
 
         
         return { post, postData, GetDatas, Delete, EditDoc, photoUrl, profileName }

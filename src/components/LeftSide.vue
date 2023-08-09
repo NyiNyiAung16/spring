@@ -15,7 +15,7 @@
 
             <router-link to="/chatroom">
                 <div class="home">
-                    <font-awesome-icon icon="fa-solid fa-users-rectangle"  class="text-red-500 text-3xl sm:text-2xl ml-1" /> <span class="hidden sm:inline">Chat</span>
+                    <font-awesome-icon icon="fa-solid fa-users-rectangle"  class="text-red-500 text-3xl sm:text-2xl ml-1" /> <span class="hidden sm:inline">Chatroom</span>
                 </div>
             </router-link>
 

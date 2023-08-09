@@ -21,7 +21,8 @@ import {
     orderBy,
     query,
     deleteDoc,
-    doc, updateDoc
+    doc, updateDoc,
+    setDoc
  } from 'firebase/firestore'
 
 import { 
@@ -59,4 +60,4 @@ const storage = getStorage(app);
 
 
 
-export { auth, createUserWithEmailAndPassword, updateProfile, updateEmail, signInWithEmailAndPassword, onAuthStateChanged, signOut, colRef, addDoc, collection, serverTimestamp, getDocs, onSnapshot, q, doc, deleteDoc, db, updateDoc, storage, ref, getDownloadURL, uploadBytes, orderBy, query, uploadBytesResumable, deleteObject, sendPasswordResetEmail, updatePassword };
+export { auth, createUserWithEmailAndPassword, updateProfile, updateEmail, signInWithEmailAndPassword, onAuthStateChanged, signOut, colRef, addDoc, collection, serverTimestamp, getDocs, onSnapshot, q, doc, deleteDoc, db, updateDoc, storage, ref, getDownloadURL, uploadBytes, orderBy, query, uploadBytesResumable, deleteObject, sendPasswordResetEmail, updatePassword, setDoc };

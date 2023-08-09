@@ -19,7 +19,7 @@
             </div>
             <p class="text-center text-lg text-blue-500 font-bold py-2">{{ imageLoading }}</p>
             <p class="text-center font-bold mt-2">{{error}}</p>
-            <button>SignIn</button>
+            <button class="signIn">SignIn</button>
             <p class="text-center text-md md:text-xl mt-2 font-bold">If you have already an account?<span class="text-blue-700 cursor-pointer" @click="switchLogin"> Login</span> here</p>
         </div>
     </form>
@@ -29,7 +29,7 @@
 import { ref } from 'vue'
 import createUser from '../composables/createUser'
 import { useRouter } from 'vue-router'
-import { storage, uploadBytes , getDownloadURL, ref as storageReference, addDoc,db,collection } from '../firebase/config'
+import { storage, uploadBytes , getDownloadURL, ref as storageReference, addDoc,db,collection, serverTimestamp, auth, doc, setDoc } from '../firebase/config'
 export default {
     setup(props,context){
         let displayName = ref('');
@@ -58,15 +58,16 @@ export default {
         }
 
         //submit siginform
-        let colRef = collection(db,'authCollection');
+        
         let router = useRouter();
         let {error,SignIn} = createUser();
         let CreateAccount = async() => {
             let res = await SignIn(email.value,password.value,displayName.value,url.value);
             if(res){
-                await addDoc(colRef,{
+                await setDoc(doc(db,'authCollection',auth.currentUser.uid),{
                 userName:displayName.value,
-                photo:url.value
+                photo:url.value,
+                time:serverTimestamp()
             })
             }
             email.value='',

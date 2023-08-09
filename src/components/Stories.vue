@@ -93,7 +93,7 @@ export default {
     .postBox{
         width: 100px;
         height: 150px;
-        background-color: gray;
+        background-color: rgb(72, 72, 72);
         border-radius: 5px;
         text-align: center;
         position: relative;

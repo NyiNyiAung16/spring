@@ -13,13 +13,14 @@
 
 <script>
 import { ref } from 'vue';
-import { onSnapshot, db, collection } from '../firebase/config'
+import { onSnapshot, db, collection, query, orderBy } from '../firebase/config'
 export default {
     setup(props,context){
         let contacts = ref([]);
         let colRef = collection(db,'authCollection');
+        let q = query(colRef,orderBy('time'));
 
-        onSnapshot(colRef, (snap) => {
+        onSnapshot(q, (snap) => {
             let results = ref([]);
             snap.docs.forEach((doc) => {
                 let document = {id:doc.id, ...doc.data()};
@@ -27,11 +28,9 @@ export default {
             })
             contacts.value = results.value;
         })
-
         let contactBox = () => {
           context.emit('hide')
         }
-
 
         return { contacts, contactBox };
     }

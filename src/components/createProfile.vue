@@ -13,7 +13,7 @@
             <label>Upload Image</label>
             <input type="file" id="file" accept="image/*" @change="fileImage">
             <div class="fileController flex items-center">
-                <font-awesome-icon icon="fa-solid fa-file-export" class="text-xl text-green-400 hover:text-green-700" />
+                <font-awesome-icon icon="fa-solid fa-file-export" class="text-xl text-blue-400 hover:text-green-700" />
                 <label for="file">Choose a file</label>
             </div>
             <p class="text-center text-lg text-blue-500 font-bold py-2">{{ ImageLoad }}</p>
@@ -26,7 +26,7 @@
 import { ref } from 'vue'
 import user from '../composables/getUser'
 import { useRouter } from 'vue-router'
-import { storage, uploadBytes , getDownloadURL, ref as storageReference, updateEmail, updateProfile } from '../firebase/config'
+import { storage, uploadBytes , getDownloadURL, ref as storageReference, updateEmail, updateProfile,updateDoc, doc, db, auth} from '../firebase/config'
 export default {
     setup(){
         const email=ref('');
@@ -57,12 +57,16 @@ export default {
                 photoURL:url.value
             });
 
+            let document = doc(db,'authCollection',auth.currentUser.uid);
+            await updateDoc(document,{
+                userName:name.value,
+                photo:url.value
+            });
+
             name.value='',
             email.value='',
             router.push('/')
         }
-        
-        
         return { name, email, url, fileImage, profileSubmit, ImageLoad }
     }
 }
@@ -126,18 +130,19 @@ export default {
         cursor: pointer;
     }
     .fileController label{
-        color: aquamarine;
+        color: rgb(12, 38, 70);
         font-size: 18px;
         margin-left: 10px;
         cursor: pointer;
+        transition: all 0.5s linear;
     }
     .fileController label:hover{
-        color: aqua;
+        color: rgb(73, 168, 236);
     }
     .first img{
         width: 100px;
         height: 100px;
-        border: 1px solid rgb(21, 202, 78);
+        border: 1px solid rgb(21, 111, 202);
         border-radius: 50%;
         object-fit: cover;
     }

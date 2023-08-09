@@ -6,16 +6,17 @@
         </div>
         <div class="search" >
              <!-- search bar small show -->
-            <div class="smallBar bg-gray-500 p-2 border border-none rounded-lg block md:hidden " v-if="smallSearch">
-                <font-awesome-icon icon="fa-solid fa-search" size="lg" class="text-gray-300"/>
-                <input type="text" class="bg-inherit ml-2 " placeholder="search in spring" v-model="searchFilter" @keypress.enter="searchUser(searchFilter)" >
+            <div class="smallBar flex items-center bg-gray-500 p-1 ml-1 border border-none rounded-lg block md:hidden " v-if="smallSearch">
+                <font-awesome-icon icon="fa-solid fa-search" size="lg" class="text-gray-300 searchIcon" @click="searchUser(searchFilter)"/>
+                <input type="text" class="bg-inherit ml-2 " placeholder="search in spring" v-model="searchFilter" >
+                <font-awesome-icon icon="fa-solid fa-xmark" class="p-1 hover:text-red-600 border border-none rounded-xl" @click="smallSearch=!smallSearch" />
             </div>
             <!-- larger search bar -->
             <div class="searchBar bg-gray-500 p-2 border border-none rounded-lg ">
                 <font-awesome-icon icon="fa-solid fa-search" size="lg" class="text-gray-300"/>
                 <input type="text" class="bg-inherit ml-2 " placeholder="search in spring" v-model="searchFilter" @keypress.enter="searchUser(searchFilter)">
             </div>
-            <div v-if="searchShow" class="searchName bg-gray-800 ">
+            <div v-if="searchShow" class="searchName bg-gray-700">
                 <div class="loopSearch m-1 p-2 border border-none flex items-center justify-between " v-for="name in filterNames" :key="name.id" >
                     <div class="flex items-center gap-1">
                         <img :src="name.photo" alt="searchImage">
@@ -26,27 +27,27 @@
                     </div>
                 </div>
             </div>
-            <div class="searchNone bg-gray-800 flex items-center justify-between " v-if="NothingSearch">
+            <div class="searchNone bg-gray-700 flex items-center justify-between " v-if="NothingSearch">
                 <span class=" text-white text-lg ">nothing to search</span>
                 <font-awesome-icon icon="fa-solid fa-xmark" size="lg" class="text-white hover:text-red-700 cursor-pointer" @click="NothingSearch=false" />
             </div>
         </div>
 
         <!-- right icon section -->
-        <div class=" text-gray-300 cursor-pointer flex items-center relative" :class="{icons:searchShow}" v-if="!smallSearch">
+        <div class=" text-gray-300 cursor-pointer flex items-center relative" :class="{icons:searchShow}" v-if="!smallSearch" >
             <router-link to="/chatroom" class="chatroom" >
                 <font-awesome-icon :icon="['far', 'comment-dots']"  size="xl" class="mr-4 icon text-white" />
             </router-link>
             <router-link to="/updateProfile" class="password">
                 <font-awesome-icon icon="fa-solid fa-lock" size="xl" class="mr-4 icon text-white" />
             </router-link>
-            <div class="profileContainer inline">
+            <div class="profileContainer inline" @click="profileController=!profileController">
                 <img :src="NavbarUrl" alt="NavbarImage" class="navbarImg">
                 
-                <ul class="profileHover">
+                <ul class="profileHover" v-if="profileController">
                     <li class="text-sm hover:text-green-200 hover:underline"><router-link to="/updateProfile">Update Profile</router-link></li>
                     <li class="block md:hidden cursor-pointer hover:text-blue-400" @click="contactShow=!contactShow">Contact</li>
-                    <button class="border border-none p-1 rounded-md hover:text-orange-300 hover:bg-gray-400" @click="Logout">Logout</button>
+                    <button class="border border-none p-1 rounded-md hover:text-blue-300 hover:bg-gray-600" @click="Logout">Logout</button>
                 </ul>
             </div>
             <div v-if="contactShow" class="contact  block md:hidden">
@@ -69,6 +70,7 @@ export default {
         let searchShow = ref(false);
         let NothingSearch = ref(false);
         let smallSearch=ref(false)
+        let profileController=ref(false);
         const Logout = () => {
              logout();
         }
@@ -106,10 +108,8 @@ export default {
                 NothingSearch.value = true;
             } 
         }
-        
-    
 
-        return { searchFilter,NothingSearch, Logout, NavbarUrl, userName, filterUsers, contactShow, searchShow, searchUser, searchName, searchImgUrl, filterNames, smallSearch }
+        return { searchFilter,NothingSearch, Logout, NavbarUrl, userName, filterUsers, contactShow, searchShow, searchUser, searchName, searchImgUrl, filterNames, smallSearch, profileController }
     }
 }
 </script>
@@ -124,6 +124,7 @@ export default {
         position: sticky;
         top: 0;
         z-index: 1000;
+        box-sizing: border-box;
     }
     .searchBar{
         width: 350px;
@@ -149,17 +150,14 @@ export default {
         position: relative;
         padding: 10px 0px;
     }
-    .profileContainer:hover .profileHover{
-        display: block;
-    }
     .profileHover{
         min-width: 120px;
         position: absolute;
         right: 0;
-        display: none;
+        top: 60px;
         border-radius: 10px;
         padding: 5px 15px;
-        background-color: gray;
+        background-color: rgb(35, 50, 73);
         text-align: center;
     }
     .navbarImg{
@@ -214,7 +212,7 @@ export default {
     .searchName{
         width: 100%;
         position: absolute;
-        top: 40px;
+        top: 45px;
         text-align: center;
         margin-top: 5px;
         border-radius: 10px;
@@ -243,8 +241,23 @@ export default {
         transition: all 0.8s linear;
     }
     .loopSearch:hover{
-        background-color: rgb(130, 128, 128);
+        background-color: rgb(25, 29, 41);
+        color: white;
         border-radius: 5px;
+    }
+    .searchIcon{
+        background-color: transparent;
+        padding: 8px;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 1s linear;
+    }
+    .searchIcon:hover{
+        background-color: #4e5156;
+    }
+    .smallBar{
+        box-sizing: border-box;
     }
 
 

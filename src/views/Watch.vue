@@ -6,16 +6,21 @@
         <div class="videoMain">
             <SmallNav></SmallNav>
             <ShowVideo></ShowVideo>
+            <div class="rightSide"> 
+              <RightSide></RightSide>
+            </div>
         </div>
   </div>
 </template>
 
 <script>
+import RightSide from '../components/RightSide'
 import SubmitVideo from '../components/SubmitVideo'
 import ShowVideo from '../components/ShowVideo'
 import SmallNav from '../components/SmallNav'
 export default {
   components: {
+    RightSide,
     SubmitVideo,
     ShowVideo,
     SmallNav },
@@ -39,8 +44,24 @@ export default {
   }
   .videoMain{
     display: grid;
-    grid-template-columns: 200px 1fr;
+    grid-template-columns: 300px 1fr 1fr;
   }
+
+  @media (max-width:1030px) {
+    .videoMain{
+      grid-template-columns: 100px 1fr 250px;
+    }  
+  }
+
+  @media (max-width:640px) {
+    .videoMain{
+      grid-template-columns: 100px 1fr;
+    }  
+    .rightSide{
+      display: none;
+    }
+  }
+
   @media (max-width:590px) {
     .videoMain{
       width: 100%;

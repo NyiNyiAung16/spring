@@ -16,12 +16,14 @@ export default {
 
         //submit chat message
         let SubmitChatMsg =async () => {
-            await addDoc(colRef, {
+            if(chatMessage.value){
+                await addDoc(colRef, {
                 name:user.displayName,
                 photo:user.photoURL,
                 message:chatMessage.value,
                 time:serverTimestamp()
             });
+            }
             chatMessage.value='';
         }
 
