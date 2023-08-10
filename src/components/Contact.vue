@@ -8,7 +8,7 @@
           <img :src="contact.photo" alt="img">
           <span>{{ contact.userName }}</span>
         </div>
-      </div>
+    </div>
 </template>
 
 <script>
@@ -38,6 +38,12 @@ export default {
 </script>
 
 <style scoped>
+  .contact{
+    max-height: 400px;
+    overflow: hidden;
+    overflow-y: scroll;
+    margin-top: 5px;
+  }
   .contact .icon{
     max-width: 150px;
     margin-bottom: 2px;
@@ -63,5 +69,19 @@ export default {
   }
   .contact .contactBox:hover{
     background-color: gray;
+  }
+  ::-webkit-scrollbar{
+    width: 10px;
+  }
+  ::-webkit-scrollbar-thumb{
+    background-color: rgb(28, 171, 171);
+    border-radius: 10px;
+    transition: all 1s ease-in;
+  }
+  ::-webkit-scrollbar-thumb:hover{
+    background-color: aqua;
+  }
+  ::-webkit-scrollbar-track{
+    background-color: rgb(38, 46, 85);
   }
 </style>

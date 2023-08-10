@@ -1,7 +1,7 @@
 <template>
   <div class="rightController">
     <div class="rightSide bg-gray-800 px-5 py-2 text-white">
-        <h3 class="text-xl text-gray-400">Pages and Profile</h3>
+        <h3 class="text-xl text-gray-400"> Your's Profile</h3>
       <div class="profile mt-2">
           <div class=" profileName flex items-center">
             <img :src="photoUrl" alt="img" class="mr-1">

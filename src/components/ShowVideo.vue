@@ -12,7 +12,7 @@
                 <div class="second">
                     <font-awesome-icon icon="fa-solid fa-ellipsis-vertical" size="xl" class="icon text-blue-400 pr-3"  />
                     <ul class="optionIcon" >
-                        <li class="hover:text-red-500 cursor-pointer" @click="deleteVd(vdDoc.id,vdDoc.Ref)" ><font-awesome-icon icon="fa-solid fa-trash" /></li>
+                        <li class="hover:text-red-500 cursor-pointer" @click="deleteVd(vdDoc.id,vdDoc.Ref,vdDoc.name)" ><font-awesome-icon icon="fa-solid fa-trash" /></li>
                     </ul>
                 </div>
             </div>
@@ -23,7 +23,7 @@
 
 <script>
 import { computed, ref } from 'vue'
-import { onSnapshot,collection, db,query, orderBy, deleteDoc, doc,deleteObject, ref as storageReference, storage } from '../firebase/config'
+import { onSnapshot,collection, db,query, orderBy, deleteDoc, doc,deleteObject, ref as storageReference, storage, auth } from '../firebase/config'
 import { formatDistanceToNow } from 'date-fns'
 export default {
     setup(){
@@ -49,14 +49,16 @@ export default {
         })
 
         //delete video
-        let deleteVd =async (id, ref) => {
-            let document = doc(db,'videoCollection',id);
-            await deleteDoc(document);
-
-            //  delete video object
-            let storageRef = storageReference(storage,ref );
-            await deleteObject(storageRef);
-            console.log('delete');
+        let deleteVd =async (id, ref,name) => {
+            let displayName = auth.currentUser.displayName;
+            if(displayName===name){
+                let document = doc(db,'videoCollection',id);
+                await deleteDoc(document);
+                //  delete video object
+                let storageRef = storageReference(storage,ref );
+                await deleteObject(storageRef);
+                console.log('delete');
+            }
             
         }
 

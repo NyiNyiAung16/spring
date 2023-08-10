@@ -33,8 +33,8 @@
                 <div class="editController">
                     <font-awesome-icon icon="fa-solid fa-ellipsis-vertical" class=" p-2 border border-none rounded-lg  hover:bg-gray-500  text-violet-400 cursor-pointer" />
                     <ul class="edit">
-                        <li class="p-1 cursor-pointer hover:text-green-400"><font-awesome-icon icon="fa-solid fa-trash" @click="Delete(GetData.id)" /></li>
-                        <li class="p-1 cursor-pointer hover:text-red-500"><font-awesome-icon icon="fa-solid fa-pen" @click="EditDoc(GetData.id)"/></li>
+                        <li class="p-1 cursor-pointer hover:text-green-400"><font-awesome-icon icon="fa-solid fa-trash" @click="Delete(GetData.id,GetData.userName)" /></li>
+                        <li class="p-1 cursor-pointer hover:text-red-500"><font-awesome-icon icon="fa-solid fa-pen" @click="EditDoc(GetData.id,GetData.userName)"/></li>
                     </ul>
                 </div>
             </div>
@@ -96,19 +96,23 @@ export default {
             })
         })
         
-
-        const Delete =async (id) => {
-            const docRef = doc(db,'postMessage', id);
-            await deleteDoc(docRef)
+        
+        const Delete =async (id,name) => {
+            if(user.displayName===name){
+                const docRef = doc(db,'postMessage', id);
+                await deleteDoc(docRef)
+            }
         }
         
-        const EditDoc =async (id) => {
-            let editPost = prompt('Edit Post');
+        const EditDoc =async (id,name) => {
             let docRef = doc(db,'postMessage',id);
-            if(editPost){
-                await updateDoc(docRef,{
+            if(user.displayName===name){
+                let editPost = prompt('Edit Post');
+                if(editPost){
+                    await updateDoc(docRef,{
                     message:editPost
-                })
+                    })
+                }
             }
         }
 
