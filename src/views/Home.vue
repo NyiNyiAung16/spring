@@ -41,7 +41,6 @@ export default {
 </script>
 <style scoped>
   .MainBody{
-    height: 100vh;
     display: grid;
     grid-template-columns: 20% 50% 27%;
     gap: 20px;
@@ -59,6 +58,7 @@ export default {
   }
   @media (max-width:600px) {
     .MainBody{
+      height: 100vh;
       display: flex;
       flex-direction: column;
       gap: 10px;

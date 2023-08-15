@@ -4,9 +4,11 @@
             <p class="text-xl">Contacts</p>
             <font-awesome-icon icon="fa-solid fa-xmark" class="icon text-red-400 cursor-pointer" @click="contactBox" />
         </div>
-        <div class="contactBox flex items-center gap-2 mb-3 cursor-pointer" v-for="contact in contacts" :key="contact.id">
-          <img :src="contact.photo" alt="img">
-          <span>{{ contact.userName }}</span>
+        <div class="scrollBar">
+          <div class="contactBox flex items-center gap-2 mb-3 cursor-pointer" v-for="contact in contacts" :key="contact.id">
+            <img :src="contact.photo" alt="img">
+            <span>{{ contact.userName }}</span>
+          </div>
         </div>
     </div>
 </template>
@@ -39,10 +41,12 @@ export default {
 
 <style scoped>
   .contact{
+    margin-top: 5px;
+  }
+  .contact .scrollBar{
     max-height: 400px;
     overflow: hidden;
     overflow-y: scroll;
-    margin-top: 5px;
   }
   .contact .icon{
     max-width: 150px;
