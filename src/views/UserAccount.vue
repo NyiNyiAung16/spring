@@ -24,11 +24,14 @@ export default {
 </script>
 
 <style>
+    @font-face {
+        font-family: 'arima';
+        src: url(../assets/static/Arima-ExtraLight.ttf);
+    }
     .userAccount{
         width: 100vw;
         height: 100vh;
         background: url(../assets/7.jpg);
-        background-origin: border-box;
         background-size: cover;
     }
 </style>

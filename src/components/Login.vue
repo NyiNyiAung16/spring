@@ -6,8 +6,8 @@
         <input type="email" required v-model="email">
         <label>Password</label>
         <input type="password" required v-model="password">
-        <p class="mt-2 font-bold text-center">{{error}}</p>
-        <button>Login</button>
+        <p class="mt-2 text-center text-red-500 font-semibold">{{error}}</p>
+        <button class="font-bold">Login</button>
         <p class="text-center text-lg md:text-xl  mt-2 font-bold">If you haven't an account?<span class="text-blue-700 cursor-pointer" @click="switchSignIn"> SignIn</span> here</p>
     </form>
 </template>
@@ -51,6 +51,10 @@ export default {
         box-sizing: border-box;
         margin: auto;
     }
+    form h3{
+        font-family: 'arima',sans-serif;
+    }
+
     label{
         display: block;
         font-size: 17px;
@@ -76,11 +80,15 @@ export default {
     }
     button:hover{
         background-color: rgb(38, 196, 224);
+        color: #fff;
     }
     button:active{
         background-color: aquamarine;
     }
     input:focus{
         outline: none;
+    }
+    form p,button{
+        font-family: 'arima';
     }
 </style>

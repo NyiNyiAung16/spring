@@ -10,7 +10,9 @@
                     </div>
                 </div>
                 <div class="second">
-                    <font-awesome-icon icon="fa-solid fa-ellipsis-vertical" size="xl" class="icon text-blue-400 pr-3"  />
+                    <div v-if="vdDoc.name===user.displayName">
+                        <font-awesome-icon icon="fa-solid fa-ellipsis-vertical" size="xl" class="icon text-blue-400 pr-3"  />
+                    </div>
                     <ul class="optionIcon" >
                         <li class="hover:text-red-500 cursor-pointer" @click="deleteVd(vdDoc.id,vdDoc.Ref,vdDoc.name)" ><font-awesome-icon icon="fa-solid fa-trash" /></li>
                     </ul>
@@ -28,6 +30,7 @@ import { formatDistanceToNow } from 'date-fns'
 export default {
     setup(){
         let vdDocs = ref([]);
+        let user = auth.currentUser;
 
         let colRef = collection(db,'videoCollection');
         let q = query(colRef,orderBy('time','desc'));
@@ -63,7 +66,7 @@ export default {
         }
 
     
-        return { vdDocs, formattedTime, deleteVd };
+        return { vdDocs, formattedTime, deleteVd, user};
     }
 }
 </script>

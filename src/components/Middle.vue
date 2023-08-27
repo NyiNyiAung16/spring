@@ -31,7 +31,9 @@
                     <span class="ml-1">{{GetData.userName}}</span>
                 </div>
                 <div class="editController">
-                    <font-awesome-icon icon="fa-solid fa-ellipsis-vertical" class=" p-2 border border-none rounded-lg  hover:bg-gray-500  text-violet-400 cursor-pointer" />
+                    <div v-if="GetData.userName===user.displayName">
+                        <font-awesome-icon icon="fa-solid fa-ellipsis-vertical" class=" p-2 border border-none rounded-lg  hover:bg-gray-500  text-violet-400 cursor-pointer" />
+                    </div>
                     <ul class="edit">
                         <li class="p-1 cursor-pointer hover:text-green-400"><font-awesome-icon icon="fa-solid fa-trash" @click="Delete(GetData.id,GetData.userName)" /></li>
                         <li class="p-1 cursor-pointer hover:text-red-500"><font-awesome-icon icon="fa-solid fa-pen" @click="EditDoc(GetData.id,GetData.userName)"/></li>
@@ -117,7 +119,7 @@ export default {
         }
 
         
-        return { post, postData, GetDatas, Delete, EditDoc, photoUrl, profileName }
+        return { post, postData, GetDatas, Delete, EditDoc, photoUrl, profileName, user }
     }
 }
 </script>
@@ -181,6 +183,10 @@ export default {
     }
     .second .reactBox .react:hover{
         background-color: gray;
+    }
+    .second .reactBox .react:active{
+        background-color: rgb(46, 46, 46);
+        color: #1bff58;
     }
     .editController{
         position: relative;

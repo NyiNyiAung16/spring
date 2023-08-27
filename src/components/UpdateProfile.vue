@@ -1,6 +1,6 @@
 <template>
     <div class="gap"></div>
-    <form enctype="multipart/form-data" class="bg-gray-800 " @submit.prevent="profileSubmit">
+    <form enctype="multipart/form-data" class="bg-gray-800" @submit.prevent="profileSubmit">
         <div class="first flex items-center gap-7">
             <img :src="url" alt="profileImg">
             <h3 class="text-4xl font-bold text-cyan-400">Update Profile</h3>
@@ -78,7 +78,7 @@ export default {
     }
     .gap{
         width: 100%;
-        height: 100px;
+        height: 80px;
     }
     form{
         max-width: 480px;

@@ -98,13 +98,13 @@ export default {
   }
   .fade-enter-from{
     opacity: 0;
-    transform: translateY(-30px);
+    transform: scale(0.5);
   }
   .fade-enter-to{
     opacity: 1;
-    transform: translateY(0px);
+    transform: scale(1);
   }
   .fade-enter-active{
-    transition: all 1s linear;
+    transition: all 1s ease-out;
   }
 </style>

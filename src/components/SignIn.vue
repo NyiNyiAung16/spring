@@ -15,11 +15,11 @@
             <input type="file" id="file" accept="image/*" @change="fileImage">
             <div class="fileController flex items-center bg-blue-400">
                 <font-awesome-icon icon="fa-solid fa-file-export" class="text-xl text-green-400 hover:text-green-700" />
-                <label for="file">Choose a file</label>
+                <label for="file" class="file font-bold">Choose a file</label>
             </div>
             <p class="text-center text-lg text-blue-500 font-bold py-2">{{ imageLoading }}</p>
             <p class="text-center font-bold mt-2">{{error}}</p>
-            <button class="signIn">SignIn</button>
+            <button class="signIn font-bold">SignIn</button>
             <p class="text-center text-md md:text-xl mt-2 font-bold">If you have already an account?<span class="text-blue-700 cursor-pointer" @click="switchLogin"> Login</span> here</p>
         </div>
     </form>
@@ -93,6 +93,10 @@ export default {
         box-sizing: border-box;
         margin: auto;
     }
+    form h3,p,button,.file{
+        font-family: 'arima',sans-serif;
+    }
+
     label{
         display: block;
         margin-bottom: 3px;
@@ -117,6 +121,7 @@ export default {
     }
     button:hover{
         background-color: rgb(38, 196, 224);
+        color: #fff;
     }
     button:active{
         background-color: aquamarine;

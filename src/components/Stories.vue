@@ -17,8 +17,10 @@
             >
                 
                 <swiper-slide v-for="storiesData in storiesDatas" :key="storiesData.id" class="postBox">
-                    <img :src="storiesData.storiesImg" alt="img1" >
-                    <p class="text-white text-sm  font-bold">{{ storiesData.name }}</p>
+                    <div>
+                        <img :src="storiesData.storiesImg" alt="img1" >
+                        <p class="text-white text-sm font-bold">{{ storiesData.name }}</p>
+                    </div>
                 </swiper-slide>
 
             </swiper>

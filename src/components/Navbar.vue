@@ -2,37 +2,12 @@
   <div class="Navbar flex shadow-xl justify-between items-center px-3 py-2 bg-gray-800">
         <div class="flex gap-4 items-center">
             <h3 class="text-xl sm:text-2xl text-gray-300 tracking-wide">SPR<span class="text-blue-500 font-bold">ING</span></h3>
-            <font-awesome-icon icon="fa-solid fa-search" size="lg" class="inline md:hidden text-gray-300 icon " @click="smallSearch=!smallSearch" v-if="!smallSearch"  />
+            <font-awesome-icon icon="fa-solid fa-search" size="lg" class="inline md:hidden text-gray-300 icon " @click="showSmallSearch" v-if="!smallSearch"  />
         </div>
-        <div class="search" >
-             <!-- search bar small show -->
-            <div class="smallBar flex items-center bg-gray-500 p-1 ml-1 border border-none rounded-lg block md:hidden " v-if="smallSearch">
-                <font-awesome-icon icon="fa-solid fa-search" size="lg" class="text-gray-300 searchIcon" @click="searchUser(searchFilter)"/>
-                <input type="text" class="bg-inherit ml-2 " placeholder="search in spring" v-model="searchFilter" >
-                <font-awesome-icon icon="fa-solid fa-xmark" class="p-1 hover:text-red-600 border border-none rounded-xl" @click="smallSearch=!smallSearch" />
-            </div>
-            <!-- larger search bar -->
-            <div class="searchBar bg-gray-500 p-2 border border-none rounded-lg ">
-                <font-awesome-icon icon="fa-solid fa-search" size="lg" class="text-gray-300"/>
-                <input type="search" class="bg-inherit  " placeholder="search in spring" v-model="searchFilter" @keypress.enter="searchUser(searchFilter)">
-            </div>
-            <div v-if="searchShow" class="searchName bg-gray-700">
-                <div class="loopSearch m-1 p-2 border border-none flex items-center justify-between " v-for="name in filterNames" :key="name.id" >
-                    <div class="flex items-center gap-1">
-                        <img :src="name.photo" alt="searchImage">
-                        <span class="text-blue-400 text-lg">{{name.userName}}</span>
-                    </div>
-                    <div>
-                        <font-awesome-icon icon="fa-solid fa-xmark" size="lg" class="text-white hover:text-red-700 cursor-pointer" @click="searchShow=false" />
-                    </div>
-                </div>
-            </div>
-            <div class="searchNone bg-gray-700 flex items-center justify-between " v-if="NothingSearch">
-                <span class=" text-white text-lg ">nothing to search</span>
-                <font-awesome-icon icon="fa-solid fa-xmark" size="lg" class="text-white hover:text-red-700 cursor-pointer" @click="NothingSearch=false" />
-            </div>
+        <div>
+            <Search :search="smallSearch" @hideNavIcon="smallSearch=!smallSearch"></Search>
         </div>
-
+        
         <!-- right icon section -->
         <div class=" text-gray-300 cursor-pointer flex items-center relative" :class="{icons:searchShow}" v-if="!smallSearch" >
             <router-link to="/chatroom" class="chatroom" >
@@ -50,7 +25,7 @@
                     <button class="border border-none p-1 rounded-md hover:text-blue-300 hover:bg-gray-600" @click="Logout">Logout</button>
                 </ul>
             </div>
-            <div v-if="contactShow" class="contact  block md:hidden">
+            <div v-show="contactShow" class="contact  block md:hidden">
                 <Contact @hide="contactShow=!contactShow"></Contact>
             </div>
         </div>
@@ -59,17 +34,16 @@
 
 <script>
 import Contact from './Contact'
+import Search from './Search.vue'
 import { ref } from 'vue'
 import logout from '../composables/logout'
-import { auth, onSnapshot, db, collection } from '../firebase/config'
+import { auth } from '../firebase/config'
 export default {
-  components: { Contact },
+  components: {
+    Search, Contact },
     setup(){
-        let searchFilter=ref('');
+        let smallSearch=ref(false);
         let contactShow = ref(false);
-        let searchShow = ref(false);
-        let NothingSearch = ref(false);
-        let smallSearch=ref(false)
         let profileController=ref(false);
         const Logout = () => {
              logout();
@@ -80,36 +54,13 @@ export default {
         const userName = user.displayName;
         const NavbarUrl = user.photoURL;
 
-        //filter user
-        let filterUsers = ref([]);
-        let colRef = collection(db,'authCollection');
-        onSnapshot(colRef, (snap) => {
-            let results = ref([]);
-            snap.docs.forEach((doc) => {
-                let document = { id:doc.id,...doc.data() };
-                results.value.push(document);
-            })
-            filterUsers.value = results.value;
-        })
+        const showSmallSearch = () => {
+            smallSearch.value = !smallSearch.value;
+        };
 
-        let searchName = ref('');
-        let searchImgUrl = ref('');
-        let filterNames = ref([]);
-        let searchUser = (key) => {
-            searchShow.value = true
-            let filterName = filterUsers.value.filter((user) => {
-                return user.userName===key;
-            })
-            if(filterName.length > 0){
-                NothingSearch.value = false;
-                filterNames.value = filterName
-            }else{
-                searchShow.value = false;
-                NothingSearch.value = true;
-            } 
-        }
+        
 
-        return { searchFilter,NothingSearch, Logout, NavbarUrl, userName, filterUsers, contactShow, searchShow, searchUser, searchName, searchImgUrl, filterNames, smallSearch, profileController }
+        return { Logout, NavbarUrl, userName, contactShow, profileController, smallSearch, showSmallSearch }
     }
 }
 </script>
@@ -125,32 +76,26 @@ export default {
         top: 0;
         z-index: 1000;
     }
-    .searchBar{
-        width: 350px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    input{
-        width: 90%;
-        color: white;
-    }
     .icon{
         padding: 10px;
         border-radius: 50%;
         background-color: rgb(81, 78, 78);
         transition: all 0.6s;
     }
-    .icon:hover{
-        background-color: gray;
-    }
-
-    input:focus{
-        outline: none;
-    }
     .profileContainer{
         position: relative;
         padding: 10px 0px;
+    }
+    .profileContainer:hover::before{
+        content: 'profile';
+        font-family: 'arima';
+        color: aqua;
+        background-color: rgb(104, 99, 99);
+        padding: 2px 6px;
+        border-radius: 10px;
+        position: absolute;
+        top: 50px;
+        left: -20px;
     }
     .profileHover{
         min-width: 120px;
@@ -207,61 +152,6 @@ export default {
         100%{  transform: translateY(40px); }
     }
 
-    /* search style */
-    .search{
-        position: relative;
-    }
-    .searchName{
-        width: 100%;
-        position: absolute;
-        top: 45px;
-        text-align: center;
-        margin-top: 5px;
-        border-radius: 10px;
-        animation: fade-in 0.8s ease-in;
-    }
-    .searchName img{
-        width: 40px;
-        height: 40px;
-        clip-path: circle();
-        object-fit: cover;
-    }
-
-    @keyframes fade-in {
-        from{transform: translateX(-30px);opacity: 0;}
-        to{transform: translateX(0px);opacity: 1;}
-    }
-
-    .searchNone{
-        width: 100%;
-        position: absolute;
-        padding:10px;
-        border-radius: 10px;
-        margin-top: 5px;
-    }
-    .loopSearch{
-        transition: all 0.8s linear;
-    }
-    .loopSearch:hover{
-        background-color: rgb(25, 29, 41);
-        color: white;
-        border-radius: 5px;
-    }
-    .searchIcon{
-        background-color: transparent;
-        padding: 8px;
-        color: white;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: all 1s linear;
-    }
-    .searchIcon:hover{
-        background-color: #4e5156;
-    }
-    .smallBar{
-        box-sizing: border-box;
-    }
-
 
     /* responsive style */
     @media (max-width: 430px) {
@@ -269,11 +159,6 @@ export default {
             padding: 10px;
             font-size: 20px;
             margin-right: 7px;
-        }
-    }
-    @media (max-width: 770px) {
-        .searchBar{
-            display: none;
         }
     }
     @media (max-width:480px) {
