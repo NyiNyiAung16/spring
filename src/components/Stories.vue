@@ -113,6 +113,7 @@ export default {
         width: 100%;
         height: 120px;
         object-fit: cover;
+        image-rendering: auto;
         border-radius: 5px 5px 0px 0px;
     }
     .postBox p{

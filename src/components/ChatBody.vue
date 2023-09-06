@@ -84,10 +84,9 @@ export default {
   ::-webkit-scrollbar-thumb{
     background: rgb(14, 176, 168); 
     border-radius: 100px;
-    transition: all 2s ease-in;
   }
   ::-webkit-scrollbar-thumb:hover{
-    background-color: rgb(12, 162, 112);
+    background-color: rgb(22, 201, 90);
   }
   ::-webkit-scrollbar-track{
     background: rgb(57, 55, 55);
@@ -105,6 +104,6 @@ export default {
     transform: scale(1);
   }
   .fade-enter-active{
-    transition: all 1s ease-out;
+    transition: all 1.7s ease-out;
   }
 </style>

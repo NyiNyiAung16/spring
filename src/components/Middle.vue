@@ -2,31 +2,11 @@
     <div class="middleController bg-gray-800 p-3">
         
         <Stories></Stories>
-
-        <div class="mt-3 bg-gray-600 px-3 py-2 border rounded-md border-none box-border">
-            <div class="first flex">
-                <img :src="photoUrl" alt="" width="50px">
-                <input type="text" :placeholder="`What are you thinking?...${profileName}`" v-model="post" @keypress.enter="postData">
-            </div>
-            <div class="createController flex justify-between px-2 mt-2">
-                <div class="create flex items-center cursor-pointer">
-                    <font-awesome-icon icon="fa-solid fa-video" class="text-green-400 text-md md:text-xl" />
-                    <span class="ml-1 text-gray-300 text-sm md:text-lg">Live</span>
-                </div>
-                <div class="create flex items-center cursor-pointer">
-                    <font-awesome-icon icon="fa-solid fa-image" class="text-orange-400 text-md md:text-xl" />
-                    <span class="ml-1 text-gray-300 text-sm md:text-lg">Picture</span>
-                </div>
-                <div class="create flex items-center cursor-pointer">
-                    <font-awesome-icon icon="fa-solid fa-face-smile" class="text-red-400 text-md md:text-xl" />
-                    <span class="ml-1 text-gray-300 text-sm md:text-lg">emotion</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="second text-white bg-gray-600 p-2 border rounded-md border-none mt-3" v-for="GetData in GetDatas" :key="GetData.id">
-            <div class="flex items-center justify-between mb-3">
-                <div class="flex items-center">
+        <Post></Post>
+        
+        <div class="second text-white bg-gray-600 border rounded-md border-none mt-3" v-for="GetData in GetDatas" :key="GetData.id">
+            <div class="flex p-2 items-center justify-between mb-3">
+                <div class="profile flex items-center">
                     <img :src="GetData.imagePath" alt="">
                     <span class="ml-1">{{GetData.userName}}</span>
                 </div>
@@ -40,7 +20,10 @@
                     </ul>
                 </div>
             </div>
-            <p class="mb-2" id="message">{{ GetData.message }}</p>
+            <p class="mb-2 px-2" id="message">{{ GetData.message }}</p>
+            <div v-if="GetData.postImage" class="postImage mb-3">
+                <img :src="GetData.postImage" alt="">
+            </div>  
             <div class="reactBox flex justify-between p-2">
                 <div class="react">
                     <font-awesome-icon icon="fa-solid fa-thumbs-up" />
@@ -62,13 +45,13 @@
 </template>
 
 <script>
-import Stories from './Stories'
+import Stories from './Stories.vue'
+import Post from './Post.vue'
 import { ref } from 'vue'
-import { colRef, serverTimestamp, addDoc, onSnapshot, q, doc, deleteDoc, db, updateDoc, auth } from '../firebase/config'
+import { onSnapshot, q, doc, deleteDoc, db, updateDoc, auth } from '../firebase/config'
 export default {
-  components: { Stories },
+  components: { Stories,Post },
     setup(){
-        const post=ref('');
         const GetDatas=ref([]);
 
          //add profile image
@@ -77,20 +60,7 @@ export default {
         let user= auth.currentUser;
         photoUrl.value=user.photoURL;
         profileName.value=user.displayName;
-
-
-
-        let postData =async () => {
-            if(post.value){
-                await addDoc(colRef,{
-                userName:profileName.value,
-                imagePath:photoUrl.value,
-                message:post.value,
-                time:serverTimestamp()
-            });
-            }
-            post.value='';
-        }
+       
 
         onSnapshot(q, (res) => {
             GetDatas.value = res.docs.map((doc) => {
@@ -119,56 +89,22 @@ export default {
         }
 
         
-        return { post, postData, GetDatas, Delete, EditDoc, photoUrl, profileName, user }
+        return { GetDatas, Delete, EditDoc, photoUrl, profileName, user }
     }
 }
 </script>
 
 <style scoped>
-   
-    .first{
-        padding-bottom: 5px;
-        border-bottom: 2px solid gray;
-    }
-    .first img{
+    .second .profile img{
         width: 40px;
         height: 40px;
         object-fit: cover;
         border-radius: 50%;
     }
-    .first input{
+    .postImage img{
         width: 100%;
-        background-color: #3a3b3c;
-        border: none;
-        border-radius: 15px;
-        padding: 0px 10px ;
-        margin-left: 5px;
-        color: #fff;
-    }
-    .first input::placeholder{
-        color: rgb(206, 206, 206);
-    }
-    .first input:focus{
-        outline: none;
-    }
-    .creatController{
-        box-sizing: border-box;
-    }
-    .create{
-        background-color: inherit;
-        padding: 5px;
-        border-radius: 10px;
-        box-sizing: border-box;
-        transition: all 0.8s ease;
-    }
-    .create:hover{
-        background-color: gray;
-    }
-    .second img{
-        width: 40px;
-        height: 40px;
+        max-height: 600px;
         object-fit: cover;
-        border-radius: 50%;
     }
     .second .reactBox{
         border-top: 2px solid gray;
@@ -218,12 +154,6 @@ export default {
         .middleController{
             max-width: 100%;
             margin-right: 0;
-        }
-    }
-
-    @media (max-width:450px) {
-        .first input::placeholder{
-            font-size: 13px;
         }
     }
 </style>

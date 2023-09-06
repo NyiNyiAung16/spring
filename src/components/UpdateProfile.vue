@@ -81,8 +81,8 @@ export default {
         height: 80px;
     }
     form{
-        max-width: 480px;
-        padding: 15px;
+        max-width: 500px;
+        padding: 20px;
         border-radius: 5px;
         box-sizing: border-box;
         margin: auto;

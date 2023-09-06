@@ -23,9 +23,6 @@
                 <p class="mt-3 text-center text-blue-600 sm:text-blue-500 font-bold text-md sm:text-lg">Before your's profile update, you need to <span class="underline text-red-400 cursor-pointer" @click="swithToHome">logout</span> first!</p>
             </div>
         </div>
-        <!-- <div class="text-center text-blue-600 sm:text-blue-500 font-bold text-md sm:text-lg mt-1">
-            <p>Before your's profile update and change password , you need to <span class="underline text-red-400 ">logout</span> first!</p>
-        </div> -->
     </div>
 </template>
 

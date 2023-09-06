@@ -1,7 +1,7 @@
 <template>
     <div class="contact py-3 px-2">
         <div class="flex justify-between">
-            <p class="text-xl">Contacts</p>
+            <p class="text-xl text-gray-400">Contacts</p>
             <font-awesome-icon icon="fa-solid fa-xmark" class="icon block md:hidden text-red-400 cursor-pointer" @click="contactBox" />
         </div>
         <div class="scrollBar">

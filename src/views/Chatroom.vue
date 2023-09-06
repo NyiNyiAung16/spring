@@ -29,8 +29,12 @@ export default {
         font-family: 'arima';
         src: url(../assets/static/Arima-ExtraLight.ttf);
     }
+    .chatController{
+        height: 100vh;
+        background:linear-gradient(180deg,#36609a,lightskyblue);
+    }
     .chatroom{
-        max-width: 600px;
+        max-width: 700px;
         height: 60vh;
         margin: 3% auto 0px;
         background-color: #4b5563;

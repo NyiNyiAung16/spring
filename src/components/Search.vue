@@ -2,15 +2,15 @@
     <div>
         <div class="search" >
              <!-- search bar small show -->
-            <div class="smallBar items-center bg-gray-500 p-1 ml-1 border border-none rounded-lg block md:hidden " v-if="search">
-                <font-awesome-icon icon="fa-solid fa-search" size="lg" class="text-gray-300 searchIcon" @click="searchUser(searchFilter)"/>
-                <input type="text" class="bg-inherit ml-2 " placeholder="search in spring" v-model="searchFilter" >
+            <div class="smallBar flex items-center bg-gray-500 p-1 ml-1 border border-none rounded-lg md:hidden " v-if="search">
+                <font-awesome-icon icon="fa-solid fa-search" size="lg" class="text-gray-300 searchIcon" />
+                <input type="text" class="bg-inherit ml-2 " placeholder="search in spring" v-model="searchFilter" @input="searchUser(searchFilter)">
                 <font-awesome-icon icon="fa-solid fa-xmark" class="p-1 hover:text-red-600 border border-none rounded-xl" @click="hideNavIcon" />
             </div>
             <!-- larger search bar -->
             <div class="searchBar bg-gray-500 p-2 border border-none rounded-lg ">
                 <font-awesome-icon icon="fa-solid fa-search" size="lg" class="text-gray-300"/>
-                <input type="search" class="bg-inherit  " placeholder="search in spring" v-model="searchFilter" @keypress.enter="searchUser(searchFilter)">
+                <input type="search" class="largeInput bg-inherit ml-3 " placeholder="search in spring" v-model="searchFilter" @input="searchUser(searchFilter)">
             </div>
             <div v-if="searchShow" class="searchName bg-gray-700">
                 <div class="loopSearch m-1 p-2 border border-none flex items-center justify-between " v-for="name in filterNames" :key="name.id" >
@@ -60,7 +60,7 @@ export default {
         let searchUser = (key) => {
             searchShow.value = true
             let filterName = filterUsers.value.filter((user) => {
-                return user.userName===key;
+                return user.userName === key;
             })
             if(filterName.length > 0){
                 NothingSearch.value = false;
@@ -73,7 +73,8 @@ export default {
 
         const hideNavIcon = () => {
             context.emit('hideNavIcon');
-            searchShow.value = !searchShow.value
+            searchShow.value = false;
+            NothingSearch.value = false;
         }
 
 
@@ -86,13 +87,13 @@ export default {
 <style scoped>
     .searchBar{
         width: 350px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
     }
     input{
-        width: 90%;
+        /* width: 90%; */
         color: white;
+    }
+    .largeInput{
+        width: 90%;
     }
     .icon{
         padding: 10px;
@@ -148,14 +149,8 @@ export default {
     }
     .searchIcon{
         background-color: transparent;
-        padding: 8px;
+        padding: 5px;
         color: white;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: all 1s linear;
-    }
-    .searchIcon:hover{
-        background-color: #4e5156;
     }
     .smallBar{
         box-sizing: border-box;

@@ -35,12 +35,12 @@ export default {
 
 <style scoped>
     .submitNav{
+        display: flex;
+        align-items: center;
         width: 100%;    
         border-radius: 0px 0px 5px 5px;
         box-sizing: border-box;
         background-color: gray;
-        display: flex;
-        align-items: center;
     }
     .submitNav input{
         width: 95%;
@@ -56,6 +56,7 @@ export default {
     .submitNav .icon{
         font-size: 28px;
         color: rgb(24, 109, 122);
+        cursor: pointer;
         transition: all 0.5s linear;
     }
     .submitNav .icon:hover{

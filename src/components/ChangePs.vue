@@ -54,8 +54,8 @@ export default {
         src: url(../assets/static/Arima-ExtraLight.ttf);
     }
     form{
-        max-width: 450px;
-        padding: 15px;
+        max-width: 500px;
+        padding: 20px;
         border-radius: 5px;
         box-sizing: border-box;
         margin: auto;
