@@ -53,11 +53,9 @@ export default {
                 time:serverTimestamp()
             });
             post.value='';
-            url.value = ''
-            }
-            
-        }
-
+            url.value = '';
+            }  
+        };
 
         return {post, postData, photoUrl, profileName, postImage, url, icon}
     }
@@ -65,9 +63,6 @@ export default {
 </script>
 
 <style scoped>
-    body{
-        cursor: progress;
-    }
     .first img{
         width: 40px;
         height: 40px;

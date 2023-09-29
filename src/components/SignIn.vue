@@ -5,7 +5,7 @@
             <img :src="url" alt="profileImg">
             <h3 class="text-center text-2xl text-blue-500 font-bold ">Create User Account</h3>
         </div>
-        <div class="">
+        <div>
             <label>DisplayName</label>
             <input type="text" required v-model="displayName">
             <label>Email</label>
@@ -14,12 +14,12 @@
             <input type="password" required v-model="password">
             <input type="file" id="file" accept="image/*" @change="fileImage">
             <div class="fileController flex items-center bg-blue-400">
-                <font-awesome-icon icon="fa-solid fa-file-export" class="text-xl text-green-400 hover:text-green-700" />
+                <font-awesome-icon icon="fa-solid fa-file-export" class="text-xl text-green-400 hover:text-green-700 duration-300" />
                 <label for="file" class="file font-bold">Choose a file</label>
             </div>
             <p class="text-center text-lg text-blue-500 font-bold py-2">{{ imageLoading }}</p>
-            <p class="text-center font-bold mt-2">{{error}}</p>
-            <button class="signIn font-bold">SignIn</button>
+            <p class="text-center text-red-500 font-bold mt-2">{{error}}</p>
+            <button class="signIn font-bold" type="submit">SignIn</button>
             <p class="text-center text-md md:text-xl mt-2 font-bold">If you have already an account?<span class="text-blue-700 cursor-pointer" @click="switchLogin"> Login</span> here</p>
         </div>
     </form>
@@ -31,19 +31,19 @@ import createUser from '../composables/createUser'
 import { useRouter } from 'vue-router'
 import { storage, uploadBytes , getDownloadURL, ref as storageReference, addDoc,db,collection, serverTimestamp, auth, doc, setDoc } from '../firebase/config'
 export default {
+    emits:['switchLogin'],
     setup(props,context){
         let displayName = ref('');
         let email = ref('');
         let password = ref('');
 
         let switchLogin = () => {
-            context.emit('switchLogin')
-        }
+            context.emit('switchLogin');
+        };
 
         //profile image
         let url=ref('https://i.pinimg.com/564x/3f/9f/5b/3f9f5b8c9f31ce16c79d48b9eeda4de0.jpg');
         let imageLoading = ref('');
-
         let fileImage =async (e) => {
             let res=await uploadBytes(storageReference(storage,`profileImages/${e.target.files[0].name}`),e.target.files[0]);
             if(res){
@@ -53,12 +53,11 @@ export default {
             let getUrl = await getDownloadURL(storageReference(storage,`profileImages/${e.target.files[0].name}`));
             url.value=getUrl;
             if(getUrl){
-                imageLoading.value=''
+                imageLoading.value='';
             }
         }
 
         //submit siginform
-        
         let router = useRouter();
         let {error,SignIn} = createUser();
         let CreateAccount = async() => {
@@ -68,14 +67,19 @@ export default {
                 userName:displayName.value,
                 photo:url.value,
                 time:serverTimestamp()
-            })
+            });
             }
             email.value='',
             password.value='',
             displayName.value='',
             router.push('/')
-        }
+        };
 
+        if(error){
+            setTimeout(() => {
+                error.value = ''
+            }, 2000);
+        }
         return { displayName, email, password, switchLogin, CreateAccount, error, url, fileImage, imageLoading };
     }
 }
@@ -84,7 +88,7 @@ export default {
 <style scoped>
     .gap{
         width: 100%;
-        height: 100px;
+        height: 80px;
     }
     form{
         max-width: 480px;

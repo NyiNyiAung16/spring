@@ -1,5 +1,5 @@
 <template>
-  <div class="rightController">
+  <div class="rightController m-0">
     <div class="rightSide bg-gray-800 px-5 py-2 text-white">
         <h3 class="text-xl text-gray-400"> Your's Profile</h3>
       <div class="profile mt-2">
@@ -7,15 +7,13 @@
             <img :src="photoUrl" alt="img" class="mr-1">
             <span>{{ profileName }}</span>
           </div>
-        <div class="ml-4">
-            <p class="icon"><font-awesome-icon icon="fa-solid fa-bell" class="mr-1 text-xl text-green-400" />alert</p>
-            <p class="icon"><font-awesome-icon icon="fa-solid fa-user-circle" class="mr-1 text-xl text-orange-400" />user</p>
-            <p class="icon"><font-awesome-icon icon="fa-solid fa-bullhorn" class="mr-1 text-xl text-blue-400" />horn</p>
-        </div>
+          <div class="ml-4">
+              <p class="icon"><font-awesome-icon icon="fa-solid fa-bell" class="mr-1 text-xl text-green-400" />alert</p>
+              <p class="icon"><font-awesome-icon icon="fa-solid fa-user-circle" class="mr-1 text-xl text-orange-400" />user</p>
+              <p class="icon"><font-awesome-icon icon="fa-solid fa-bullhorn" class="mr-1 text-xl text-blue-400" />horn</p>
+          </div>
       </div>
-
       <Contact></Contact>
-      
     </div>
   </div>
 </template>
@@ -85,6 +83,7 @@ export default {
     padding:7px;
     border-radius: 10px;
     background-color: inherit;
+    transition: all 0.6s ease-in;
   }
   .contact .icon:hover{
     background-color: gray;

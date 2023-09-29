@@ -1,16 +1,12 @@
 <template>
-  <div class="homeController">
+  <div>
     <Navbar></Navbar>
     <div class="MainBody">
-
-      <LeftSide></LeftSide>
-
-      <Middle></Middle>
-
-      <div class="rightSide">
-        <RightSide></RightSide>
-      </div>
-
+        <LeftSide></LeftSide>
+        <Middle></Middle>
+        <div class="rightSide">
+          <RightSide></RightSide>
+        </div>
     </div>
   </div>
 </template>
@@ -42,15 +38,12 @@ export default {
 <style scoped>
   .MainBody{
     display: grid;
-    grid-template-columns: 20% 50% 27%;
+    grid-template-columns: 20% 50% 25%;
     gap: 20px;
-  }
-  .navbarLeft{
-    display: none;
   }
   @media (max-width:840px) {
     .MainBody{
-      grid-template-columns: 20% 80%;
+      grid-template-columns: 20% 77%;
     }
     .rightSide{
       display: none;

@@ -17,12 +17,13 @@ import { ref } from 'vue'
 import signInAccount from '../composables/signInAccount'
 import { useRouter } from 'vue-router'
 export default {
+    emits:['switchSignIn'],
     setup(props,context){
         let email = ref('');
         let password = ref('');
 
         let switchSignIn= () => {
-            context.emit('switchSignIn')
+            context.emit('switchSignIn');
         }
         
         let router = useRouter();
@@ -31,7 +32,7 @@ export default {
             await LoginAccount(email.value, password.value);
             email.value = '',
             password.value = ''
-            router.push('/')
+            router.push('/');
         }
         
         return { email, password, switchSignIn, Login, error };

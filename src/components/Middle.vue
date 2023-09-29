@@ -1,10 +1,8 @@
 <template>
-    <div class="middleController bg-gray-800 p-3">
-        
+    <div class="middleController bg-gray-800 p-3 m-0">
         <Stories></Stories>
         <Post></Post>
-        
-        <div class="second text-white bg-gray-600 border rounded-md border-none mt-3" v-for="GetData in GetDatas" :key="GetData.id">
+        <div class="m-0 second text-white bg-gray-600 border rounded-md border-none mt-3" v-for="GetData in GetDatas" :key="GetData.id">
             <div class="flex p-2 items-center justify-between mb-3">
                 <div class="profile flex items-center">
                     <img :src="GetData.imagePath" alt="">
@@ -12,7 +10,7 @@
                 </div>
                 <div class="editController">
                     <div v-if="GetData.userName===user.displayName">
-                        <font-awesome-icon icon="fa-solid fa-ellipsis-vertical" class=" p-2 border border-none rounded-lg  hover:bg-gray-500  text-violet-400 cursor-pointer" />
+                        <font-awesome-icon icon="fa-solid fa-ellipsis-vertical" class="p-2 border border-none rounded-lg  hover:bg-gray-500  text-violet-400 cursor-pointer" />
                     </div>
                     <ul class="edit">
                         <li class="p-1 cursor-pointer hover:text-green-400"><font-awesome-icon icon="fa-solid fa-trash" @click="Delete(GetData.id,GetData.userName)" /></li>
@@ -66,7 +64,7 @@ export default {
             GetDatas.value = res.docs.map((doc) => {
                 return { id:doc.id,...doc.data() }
             })
-        })
+        });
         
         
         const Delete =async (id,name) => {
@@ -127,19 +125,17 @@ export default {
     .editController{
         position: relative;
     }
-    .editController:hover .edit{
-        display: block;
-        background-color: #3a3b3c;
-    }
     .edit{
         position: absolute;
         right: 1px;
         border-radius: 5px;
         display: none;
-        padding: 5px 10px;
+        padding: 5px 10px;   
     }
-
-
+    .editController:hover .edit{
+        display: block;
+        background-color: #3a3b3c;
+    }
 
 
 

@@ -1,10 +1,11 @@
 <template>
     <div class="flex gap-2 mt-1">
-            
             <div class="postBox">
                 <img :src="photoUrl" alt="img1">
                 <input type="file" accept="imgae/jpg" id="storiesImage" class="hidden" @change="postStoriesImg">
-                <label for="storiesImage"><font-awesome-icon icon="fa-solid fa-plus" class="plus text-white text-lg cursor-pointer  bg-green-300 border rounded-2xl p-1 transition hover:bg-green-500 ease-in" /></label>
+                <label for="storiesImage">
+                    <font-awesome-icon icon="fa-solid fa-plus" class="plus text-white text-lg cursor-pointer  bg-green-300 border rounded-2xl p-1 transition hover:bg-green-500 ease-in" />
+                </label>
                 <p class="text-white text-sm font-bold">Make stories</p>
             </div>
 
@@ -14,8 +15,7 @@
                 :space-between="20"
                 :loop="true"
                 navigation
-            >
-                
+            >     
                 <swiper-slide v-for="storiesData in storiesDatas" :key="storiesData.id" class="postBox">
                     <div>
                         <img :src="storiesData.storiesImg" alt="img1" >
@@ -23,11 +23,8 @@
                     </div>
                 </swiper-slide>
 
-            </swiper>
-            
+            </swiper>   
         </div>
-
-
 </template>
 
 <script>
@@ -68,19 +65,19 @@ export default {
                 name:profileName.value,
                 storiesImg:getUrl,
                 storiesTime:serverTimestamp()
-            })
+            });
         }
         
 
         //get stories data
         let storiesDatas = ref([]);
-        let q=query(colRef,orderBy('storiesTime','desc'))
+        let q=query(colRef,orderBy('storiesTime','desc'));
 
         onSnapshot(q, (snap) => {
             storiesDatas.value = snap.docs.map((doc) => {
                 return { id:doc.id, ...doc.data() }
             })
-        })
+        });
         
         return { photoUrl, profileName, postStoriesImg, storiesDatas, modules:[Navigation] }
     }

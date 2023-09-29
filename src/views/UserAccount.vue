@@ -1,7 +1,7 @@
 <template>
     <div class="userAccount">
         <div v-if="LoginBox" class="mx-3">
-            <Login @switchSignIn="LoginBox=!LoginBox"></Login>
+            <Login @switchSignIn="LoginBox = !LoginBox"></Login>
         </div>
         <div v-else class="mx-3">
             <SignIn @switchLogin="LoginBox=!LoginBox"></SignIn>
@@ -31,7 +31,12 @@ export default {
     .userAccount{
         width: 100vw;
         height: 100vh;
-        background: url(../assets/7.jpg);
+        /* background: url(../assets/7.jpg); */
+        background: linear-gradient(
+            45deg,
+            rgb(126, 192, 218) 53%,
+            rgb(38, 88, 94) 0%
+        );
         background-size: cover;
     }
 </style>

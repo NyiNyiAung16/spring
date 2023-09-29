@@ -78,7 +78,7 @@ export default {
     }
     .gap{
         width: 100%;
-        height: 80px;
+        height: 60px;
     }
     form{
         max-width: 500px;

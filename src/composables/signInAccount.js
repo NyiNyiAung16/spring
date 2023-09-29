@@ -16,7 +16,7 @@ let LoginAccount = async (email, password) => {
         }else if(e.message ==='Firebase: Error (auth/wrong-password).' ){
             error.value = 'Your password is wrong! Please enter a correct password.'
         }
-        else if(err.message === 'Firebase: Password should be at least 6 characters (auth/weak-password).'){
+        else if(e.message === 'Firebase: Password should be at least 6 characters (auth/weak-password).'){
             error.value = 'Password should be at lease 6 characters!'
         }
         else{

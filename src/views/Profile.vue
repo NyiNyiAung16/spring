@@ -10,14 +10,14 @@
         <div>
             <div v-if="!showUpdate" class="justify-center items-center mt-4 flex flex-col">
                 <div class="flex items-center">
-                    <p class="text-md sm:text-lg text-blue-500 font-bold">If you want to update profile, click the icon  >></p>
+                    <p class="text-md sm:text-lg text-blue-500 font-bold">If you want to <span class="underline">update profile</span>, click the icon  >></p>
                     <font-awesome-icon icon="fa-solid fa-lock" @click="showUpdate=!showUpdate" class="icon ml-1 cursor-pointer text-2xl sm:text-3xl" />
                 </div>
                 <p class="mt-3 text-center text-blue-600 sm:text-blue-500 font-bold text-md sm:text-lg">Before your's password change, you need to <span class="underline text-red-400 cursor-pointer" @click="swithToHome">logout</span> first!</p>
             </div>
             <div v-if="showUpdate" class="justify-center items-center mt-4 flex flex-col">
                 <div class="flex items-center">
-                    <p class="text-md sm:text-lg text-blue-500 font-bold">If you want to change password, click the icon  >></p>
+                    <p class="text-md sm:text-lg text-blue-500 font-bold">If you want to <span class="underline">change password</span>, click the icon  >></p>
                     <font-awesome-icon icon="fa-solid fa-lock" @click="showUpdate=!showUpdate" class="icon ml-1 cursor-pointer text-2xl sm:text-3xl" />
                 </div>
                 <p class="mt-3 text-center text-blue-600 sm:text-blue-500 font-bold text-md sm:text-lg">Before your's profile update, you need to <span class="underline text-red-400 cursor-pointer" @click="swithToHome">logout</span> first!</p>
@@ -56,7 +56,11 @@ export default {
         width: 100vw;
         height: 100vh;
         /* background: url(../assets/7.jpg); */
-        background: linear-gradient(180deg,lightskyblue,lightgreen);
+        background: linear-gradient(
+            40deg,
+            skyblue 55%,
+            rgb(93, 161, 178) 0%
+        );
         background-origin: border-box;
         background-size: cover;
     }

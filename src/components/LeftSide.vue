@@ -1,27 +1,27 @@
 <template>
-    <div class="leftSide bg-gray-800 text-gray-400 p-2 flex flex-col items-center sm:items-start">
-        <div class="left flex flex-col ">
+    <div class="leftSide bg-gray-800 text-gray-400 p-2 flex flex-col items-center md:items-start m-0">
+        <div class="left flex flex-col items-center md:items-start">
             <router-link to="/" >
                 <div class="home">
-                    <font-awesome-icon icon="fa-solid fa-home"   class="text-blue-500 text-2xl" /> <span class="hidden sm:inline">Home</span>
+                    <font-awesome-icon icon="fa-solid fa-home"   class="text-blue-500 text-2xl" /> <span class="hidden md:inline">Home</span>
                 </div>
             </router-link>
 
             <router-link to="/watch" >
                 <div class="home">
-                    <font-awesome-icon icon="fa-solid fa-tv"  class="text-orange-500 text-2xl" /> <span class="hidden sm:inline">Watch</span>
+                    <font-awesome-icon icon="fa-solid fa-tv"  class="text-orange-500 text-2xl" /> <span class="hidden md:inline">Watch</span>
                 </div>
             </router-link>
 
             <router-link to="/chatroom">
                 <div class="home">
-                    <font-awesome-icon icon="fa-solid fa-users-rectangle"  class="text-red-500 text-2xl" /> <span class="hidden sm:inline">Chatroom</span>
+                    <font-awesome-icon icon="fa-solid fa-users-rectangle"  class="text-red-500 text-2xl" /> <span class="hidden md:inline">Chatroom</span>
                 </div>
             </router-link>
 
             <router-link to="/updateProfile" >
                 <div class="home">
-                    <font-awesome-icon icon="fa-solid fa-user-circle" class="text-green-500 text-2xl" /> <span class="hidden sm:inline">Update Profile</span>
+                    <font-awesome-icon icon="fa-solid fa-user-circle" class="text-green-500 text-2xl" /> <span class="hidden md:inline">Update Profile</span>
                 </div>
             </router-link>
         </div>
@@ -57,6 +57,9 @@ export default {
         background-color: rgb(59, 61, 85);
     }
     @media (max-width:600px) {
+        .leftSide{
+            height: 65px;
+        }
         .left{
             width: 100%;
             flex-direction: row;

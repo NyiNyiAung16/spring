@@ -48,14 +48,13 @@ import {
 
 
 //second config file
-
 const firebaseConfig = {
-  apiKey: "AIzaSyAbX1HJYdDaxAWDeDN3QHs4E8kwQYQZhVw",
-  authDomain: "spring-1fb3b.firebaseapp.com",
-  projectId: "spring-1fb3b",
-  storageBucket: "spring-1fb3b.appspot.com",
-  messagingSenderId: "621068856738",
-  appId: "1:621068856738:web:9d3b4f6ef50056088456fb"
+  apiKey: "AIzaSyCc5oJlSwEAqFBJHjRqb4VVnpeqh1JgKvI",
+  authDomain: "spring-da753.firebaseapp.com",
+  projectId: "spring-da753",
+  storageBucket: "spring-da753.appspot.com",
+  messagingSenderId: "1011090486907",
+  appId: "1:1011090486907:web:06d6d0f267cedbaa3e14de"
 };
 
 // Initialize Firebase

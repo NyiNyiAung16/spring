@@ -1,25 +1,25 @@
 <template>
     <div>
         <div class="search" >
-             <!-- search bar small show -->
+             <!-- search bar small show for medium size -->
             <div class="smallBar flex items-center bg-gray-500 p-1 ml-1 border border-none rounded-lg md:hidden " v-if="search">
                 <font-awesome-icon icon="fa-solid fa-search" size="lg" class="text-gray-300 searchIcon" />
                 <input type="text" class="bg-inherit ml-2 " placeholder="search in spring" v-model="searchFilter" @input="searchUser(searchFilter)">
-                <font-awesome-icon icon="fa-solid fa-xmark" class="p-1 hover:text-red-600 border border-none rounded-xl" @click="hideNavIcon" />
+                <font-awesome-icon icon="fa-solid fa-xmark" class="p-1 hover:text-red-500 duration-200 cursor-pointer border border-none rounded-xl" @click="hideNavIcon" />
             </div>
-            <!-- larger search bar -->
+            <!-- larger size for search bar -->
             <div class="searchBar bg-gray-500 p-2 border border-none rounded-lg ">
                 <font-awesome-icon icon="fa-solid fa-search" size="lg" class="text-gray-300"/>
                 <input type="search" class="largeInput bg-inherit ml-3 " placeholder="search in spring" v-model="searchFilter" @input="searchUser(searchFilter)">
             </div>
-            <div v-if="searchShow" class="searchName bg-gray-700">
+            <div v-if="searchData" class="searchName bg-gray-700">
                 <div class="loopSearch m-1 p-2 border border-none flex items-center justify-between " v-for="name in filterNames" :key="name.id" >
                     <div class="flex items-center gap-1">
                         <img :src="name.photo" alt="searchImage">
                         <span class="text-blue-400 text-lg">{{name.userName}}</span>
                     </div>
                     <div>
-                        <font-awesome-icon icon="fa-solid fa-xmark" size="lg" class="text-white hover:text-red-700 cursor-pointer" @click="searchShow=false" />
+                        <font-awesome-icon icon="fa-solid fa-xmark" size="lg" class="text-white hover:text-red-700 cursor-pointer" @click="searchData=false" />
                     </div>
                 </div>
             </div>
@@ -39,7 +39,7 @@ export default {
     setup(props,context){
         let smallSearch = ref(false);
         let searchFilter=ref('');
-        let searchShow = ref(false);
+        let searchData = ref(false);
         let NothingSearch = ref(false);
 
         //filter user
@@ -52,33 +52,33 @@ export default {
                 results.value.push(document);
             })
             filterUsers.value = results.value;
-        })
+        });
 
         let searchName = ref('');
         let searchImgUrl = ref('');
         let filterNames = ref([]);
-        let searchUser = (key) => {
-            searchShow.value = true
+        let searchUser = (name) => {
+            searchData.value = true;
             let filterName = filterUsers.value.filter((user) => {
-                return user.userName === key;
+                return user.userName === name;
             })
             if(filterName.length > 0){
                 NothingSearch.value = false;
-                filterNames.value = filterName
+                filterNames.value = filterName;
             }else{
-                searchShow.value = false;
+                searchData.value = false;
                 NothingSearch.value = true;
             } 
         }
 
         const hideNavIcon = () => {
             context.emit('hideNavIcon');
-            searchShow.value = false;
+            searchData.value = false;
             NothingSearch.value = false;
         }
 
 
-        return{filterUsers, searchShow, searchUser, searchName, searchImgUrl, filterNames, smallSearch, NothingSearch, searchFilter, hideNavIcon }
+        return{filterUsers, searchData, searchUser, searchName, searchImgUrl, filterNames, smallSearch, NothingSearch, searchFilter, hideNavIcon }
     }
 }
 
@@ -89,7 +89,6 @@ export default {
         width: 350px;
     }
     input{
-        /* width: 90%; */
         color: white;
     }
     .largeInput{

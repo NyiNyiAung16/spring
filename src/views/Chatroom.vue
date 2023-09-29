@@ -31,7 +31,7 @@ export default {
     }
     .chatController{
         height: 100vh;
-        background:linear-gradient(180deg,#36609a,lightskyblue);
+        background:linear-gradient(180deg,#33578a,rgb(115, 175, 212));
     }
     .chatroom{
         max-width: 700px;

@@ -1,15 +1,15 @@
 <template>
-  <div class="Navbar flex shadow-xl justify-between items-center px-3 py-2 bg-gray-800">
+  <div class="Navbar flex shadow-xl justify-between items-center px-3 py-2 bg-gray-800 m-0">
         <div class="flex gap-4 items-center">
             <h3 class="text-xl sm:text-2xl text-gray-300 tracking-wide">SPR<span class="text-blue-500 font-bold">ING</span></h3>
-            <font-awesome-icon icon="fa-solid fa-search" size="lg" class="inline md:hidden text-gray-300 icon " @click="showSmallSearch" v-if="!smallSearch"  />
+            <font-awesome-icon icon="fa-solid fa-search" size="lg" class="inline md:hidden text-gray-300 cursor-pointer icon " @click="showSmallSearch" v-if="!smallSearch"  />
         </div>
         <div>
             <Search :search="smallSearch" @hideNavIcon="smallSearch=!smallSearch"></Search>
         </div>
         
         <!-- right icon section -->
-        <div class=" text-gray-300 cursor-pointer flex items-center relative" :class="{icons:searchShow}" v-if="!smallSearch" >
+        <div class=" text-gray-300 cursor-pointer flex items-center relative"  v-if="!smallSearch" >
             <router-link to="/chatroom" class="chatroom" >
                 <font-awesome-icon :icon="['far', 'comment-dots']"  size="xl" class="mr-4 icon text-white" />
             </router-link>
@@ -20,7 +20,9 @@
                 <img :src="NavbarUrl" alt="NavbarImage" class="navbarImg">
                 
                 <ul class="profileHover" v-if="profileController">
-                    <li class="text-sm hover:text-green-200 hover:underline"><router-link to="/updateProfile">Update Profile</router-link></li>
+                    <li class="text-sm hover:text-green-200 hover:underline">
+                        <router-link to="/updateProfile">Update Profile</router-link>
+                    </li>
                     <li class="block md:hidden cursor-pointer hover:text-blue-400" @click="contactShow=!contactShow">Contact</li>
                     <button class="border border-none p-1 rounded-md hover:text-blue-300 hover:bg-gray-600" @click="Logout">Logout</button>
                 </ul>
@@ -45,9 +47,11 @@ export default {
         let smallSearch=ref(false);
         let contactShow = ref(false);
         let profileController=ref(false);
+
+        //logout
         const Logout = () => {
              logout();
-        }
+        };
 
         //navbarImage
         let user = auth.currentUser;
@@ -57,8 +61,6 @@ export default {
         const showSmallSearch = () => {
             smallSearch.value = !smallSearch.value;
         };
-
-        
 
         return { Logout, NavbarUrl, userName, contactShow, profileController, smallSearch, showSmallSearch }
     }
