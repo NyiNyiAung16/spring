@@ -24,7 +24,6 @@ export default {
     SubmitVideo,
     ShowVideo,
     SmallNav },
-
 }
 </script>
 

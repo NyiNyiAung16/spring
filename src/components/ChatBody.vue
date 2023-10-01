@@ -1,6 +1,6 @@
 <template>
   <div class="chatbody" ref="chatBody">
-      <div class="chatBox" v-for="CD in formattedChatDatas" :key="CD.id">
+      <div class="chatBox" :class="{end:user.displayName === CD.name}" v-for="CD in formattedChatDatas" :key="CD.id">
         <div class="boxNav flex gap-2 items-center">
           <img :src="CD.photo" alt="chatimg">
           <p class="text-white font-bold">{{CD.name}}</p>
@@ -19,11 +19,13 @@
 import { computed, onUpdated, ref } from 'vue';
 import { onSnapshot, collection, db, query, orderBy } from '../firebase/config'
 import { formatDistanceToNow } from 'date-fns'
+import { auth } from '../firebase/config';
 export default {
   setup() {
       const ChatDatas = ref([]);
       let colRef =collection(db,'chatCollection');
       let q = query(colRef,orderBy('time'));
+      const user = auth.currentUser;
 
       //fixing date 
       const formattedChatDatas = computed(()=>{
@@ -40,7 +42,7 @@ export default {
           doc.data().time && results.value.push(document);
         })
         ChatDatas.value=results.value;
-      })
+      });
 
       //auto scrolling feature
       let chatBody=ref(null);
@@ -48,7 +50,7 @@ export default {
         chatBody.value.scrollTop = chatBody.value.scrollHeight
       })
 
-      return { ChatDatas, formattedChatDatas, chatBody }
+      return { ChatDatas, formattedChatDatas, chatBody, user }
   }
 }
 </script>
@@ -62,7 +64,19 @@ export default {
     overflow-y: scroll;
   }
   .chatBox{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
     margin: 20px 0px;
+  }
+  .end{
+    align-items: end;
+  }
+  .end .chatMessage p{
+    float: right;
+  }
+  .end .boxNav {
+    flex-direction: row-reverse;
   }
   .chatBox img{
     width: 30px;
@@ -71,7 +85,8 @@ export default {
     border-radius: 50%;
   }
   .chatBox .chatMessage{
-    max-width: 460px;
+    display: block;
+    /* max-width: 460px; */
     border-radius: 15px;
     padding: 5px 10px;
     margin: 8px ;

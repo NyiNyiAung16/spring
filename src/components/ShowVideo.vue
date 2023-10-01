@@ -61,11 +61,9 @@ export default {
                 let storageRef = storageReference(storage,ref );
                 await deleteObject(storageRef);
                 console.log('delete');
-            }
-            
+            }  
         }
 
-    
         return { vdDocs, formattedTime, deleteVd, user};
     }
 }

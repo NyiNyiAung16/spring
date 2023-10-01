@@ -13,8 +13,12 @@
                         <font-awesome-icon icon="fa-solid fa-ellipsis-vertical" class="p-2 border border-none rounded-lg  hover:bg-gray-500  text-violet-400 cursor-pointer" />
                     </div>
                     <ul class="edit">
-                        <li class="p-1 cursor-pointer hover:text-green-400"><font-awesome-icon icon="fa-solid fa-trash" @click="Delete(GetData.id,GetData.userName)" /></li>
-                        <li class="p-1 cursor-pointer hover:text-red-500"><font-awesome-icon icon="fa-solid fa-pen" @click="EditDoc(GetData.id,GetData.userName)"/></li>
+                        <li class="p-1 cursor-pointer hover:text-green-400">
+                            <font-awesome-icon icon="fa-solid fa-trash" @click="Delete(GetData.id,GetData.userName)" />
+                        </li>
+                        <li class="p-1 cursor-pointer hover:text-red-500">
+                            <font-awesome-icon icon="fa-solid fa-pen" @click="EditDoc(GetData.id,GetData.message)"/>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -23,16 +27,16 @@
                 <img :src="GetData.postImage" alt="">
             </div>  
             <div class="reactBox flex justify-between p-2">
-                <div class="react">
-                    <font-awesome-icon icon="fa-solid fa-thumbs-up" />
+                <div class="react" @click="react($event,`like${GetData.id}`,'text-blue-400')">
+                    <font-awesome-icon icon="fa-solid fa-thumbs-up" :id="`like${GetData.id}`" /> 
                     <span class="ml-1">Like</span>
                 </div>
-                <div class="react">
-                    <font-awesome-icon icon="fa-solid fa-comment" />
+                <div class="react" @click="react($event,`comment${GetData.id}`,'text-yellow-400')">
+                    <font-awesome-icon icon="fa-solid fa-comment" :id="`comment${GetData.id}`" />
                     <span class="ml-1">Comment</span>
                 </div>
-                <div class="react">
-                    <font-awesome-icon icon="fa-solid fa-share" />
+                <div class="react" @click="react($event,`share${GetData.id}`,'text-red-400')">
+                    <font-awesome-icon icon="fa-solid fa-share" :id="`share${GetData.id}`" />
                     <span class="ml-1">Share</span>
                 </div>
             </div>
@@ -66,7 +70,6 @@ export default {
             })
         });
         
-        
         const Delete =async (id,name) => {
             if(user.displayName===name){
                 const docRef = doc(db,'postMessage', id);
@@ -74,20 +77,41 @@ export default {
             }
         }
         
-        const EditDoc =async (id,name) => {
-            let docRef = doc(db,'postMessage',id);
-            if(user.displayName===name){
-                let editPost = prompt('Edit Post');
-                if(editPost){
+        const EditDoc =async (id,msg) => {
+            const message = document.getElementById('message');
+            const newInput = document.createElement('input');
+            newInput.className = 'w-full text-gray-900 p-2 border-0 rounded outline-0';
+            newInput.value = msg;
+            //cursor to end
+            newInput.selectionStart = newInput.value.length;
+            newInput.selectionEnd = newInput.value.length;
+            newInput.setAttribute('autofocus','');
+            message.replaceWith(newInput);
+            //update post data
+            newInput.addEventListener('keypress',async(e)=>{
+                if(e.key === 'Enter'){ 
+                    let docRef = doc(db,'postMessage',id);
+                    message.innerText = newInput.value;
+                    newInput.replaceWith(message); 
                     await updateDoc(docRef,{
-                    message:editPost
-                    })
+                        message:newInput.value
+                    });
                 }
-            }
+                
+            });
+        };
+
+        //reaction
+        const react = (e,id,color)=>{
+           const like = document.getElementById(id);
+           like.classList.add('icon');
+           like.classList.add(color);
+           e.target.classList.add(color);
         }
 
+
         
-        return { GetDatas, Delete, EditDoc, photoUrl, profileName, user }
+        return { GetDatas, Delete, EditDoc, photoUrl, profileName, user, react }
     }
 }
 </script>
@@ -137,6 +161,19 @@ export default {
         background-color: #3a3b3c;
     }
 
+    .icon{
+        animation: bounce 1s 3;
+    }
+    @keyframes bounce {
+        0%, 100% {
+            transform: scale(1.2);
+            animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+        }
+        50% {
+            transform: scale(0);
+            animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+        }
+    }
 
 
     /* responsive style */

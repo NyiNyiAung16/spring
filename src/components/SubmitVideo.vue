@@ -19,7 +19,7 @@
 
 <script>
 import { ref } from 'vue';
-import { auth, ref as storageReference, storage, getDownloadURL, uploadBytesResumable, collection, addDoc, db, serverTimestamp,deleteObject } from '../firebase/config'
+import { auth, ref as storageReference, storage, getDownloadURL, uploadBytesResumable, collection, addDoc, db, serverTimestamp } from '../firebase/config'
 export default {
     setup() {
         let user = auth.currentUser;
@@ -33,33 +33,28 @@ export default {
         let progressCheck = ref(false);
 
         //postvideo
-        let postVideo =async (e) => {
+        let postVideo = async (e) => {
             let videoName = e.target.files[0].name;
             let videoObj = e.target.files[0];
             let storageRef = storageReference(storage, `postVideo/${videoName}`)
 
             const uploadTask = uploadBytesResumable(storageRef, videoObj);
             progressCheck.value= true;
-            
             //uploadtask
             uploadTask.on('state_changed', 
             (snapshot) => {
-
-            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-
-            progressing.value='Upload is ' + progress + '% done';
-
-            switch (snapshot.state) {
-
-            case 'paused':
-                break;
-            case 'running':
-                if(progressing.value=='Upload is 100% done'){
-                    progressCheck.value=false
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                progressing.value='Upload is ' + progress + '% done';
+                switch (snapshot.state) {
+                    case 'paused':
+                        break;
+                    case 'running':
+                    if(progressing.value=='Upload is 100% done'){
+                        progressCheck.value=false
+                    }
+                    break;
                 }
-                break;
-            }
-        }, 
+            }, 
         (error) => {
             error = error.message;
         }, 
@@ -67,8 +62,7 @@ export default {
             async() => {
             let downloadUrl = await getDownloadURL(uploadTask.snapshot.ref);
             url.value = downloadUrl;
-            
-
+    
             //add video collection 
             let colRef = collection(db,'videoCollection');
             let vdObj ={
@@ -79,7 +73,6 @@ export default {
                 Ref:storageRef.fullPath
             };
             await addDoc(colRef,vdObj);
-
             },
         );  
     }

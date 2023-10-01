@@ -1,7 +1,7 @@
 <template>
   <div class="submitNav">
     <input type="text" placeholder="Enter to submit" v-model="chatMessage">
-    <font-awesome-icon icon="fa-solid fa-circle-arrow-right" class="icon " @click="SubmitChatMsg" />
+    <font-awesome-icon icon="fa-solid fa-circle-arrow-right" class="icon text-blue-400" @click="SubmitChatMsg" />
   </div>
 </template>
 
@@ -55,9 +55,9 @@ export default {
     }
     .submitNav .icon{
         font-size: 28px;
-        color: rgb(24, 109, 122);
+        /* color: rgb(24, 109, 122); */
         cursor: pointer;
-        transition: all 0.5s linear;
+        transition: color 0.5s linear;
     }
     .submitNav .icon:hover{
         color: aqua;
