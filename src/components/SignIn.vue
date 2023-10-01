@@ -12,10 +12,10 @@
             <input type="email" required v-model="email">
             <label>Password</label>
             <input type="password" required v-model="password">
-            <input type="file" id="file" accept="image/*" @change="fileImage">
+            <input type="file" id="file" accept="image/*" ref="image" @change="fileImage">
             <div class="fileController flex items-center bg-blue-400">
                 <font-awesome-icon icon="fa-solid fa-file-export" class="text-xl text-green-400 hover:text-green-700 duration-300" />
-                <label for="file" class="file font-bold">Choose a file</label>
+                <label for="file" class="file font-bold" ref="label">Choose a file</label>
             </div>
             <p class="text-center text-lg text-blue-500 font-bold py-2">{{ imageLoading }}</p>
             <p class="text-center text-red-500 font-bold mt-2">{{error}}</p>
@@ -36,6 +36,8 @@ export default {
         let displayName = ref('');
         let email = ref('');
         let password = ref('');
+        const image = ref(null);
+        const label = ref(null);
 
         let switchLogin = () => {
             context.emit('switchLogin');
@@ -44,25 +46,31 @@ export default {
         //profile image
         let url=ref('https://i.pinimg.com/564x/3f/9f/5b/3f9f5b8c9f31ce16c79d48b9eeda4de0.jpg');
         let imageLoading = ref('');
-        let fileImage =async (e) => {
-            let res=await uploadBytes(storageReference(storage,`profileImages/${e.target.files[0].name}`),e.target.files[0]);
-            if(res){
-                imageLoading.value="Image is Loading! Please wait a moment";
-            }
-
-            let getUrl = await getDownloadURL(storageReference(storage,`profileImages/${e.target.files[0].name}`));
-            url.value=getUrl;
-            if(getUrl){
-                imageLoading.value='';
-            }
+        let fileImage = () => {
+            const imgPath = image.value.files[0].name;
+            label.value.classList.add('text-xs');
+            label.value.innerText = imgPath;
         }
 
         //submit siginform
         let router = useRouter();
         let {error,SignIn} = createUser();
         let CreateAccount = async() => {
-            let res = await SignIn(email.value,password.value,displayName.value,url.value);
+            //image
+            const storageRef = storageReference(storage,`profileImages/${image.value.files[0].name}`);
+            const file = image.value.files[0];
+            let res=await uploadBytes(storageRef,file);
             if(res){
+                imageLoading.value="Image is Loading! Please wait a moment";
+            }
+            let getUrl = await getDownloadURL(storageRef);
+            url.value=getUrl;
+            if(getUrl){
+                imageLoading.value='';
+            }
+            //signin
+            let response = await SignIn(email.value,password.value,displayName.value,url.value);
+            if(response){
                 await setDoc(doc(db,'authCollection',auth.currentUser.uid),{
                 userName:displayName.value,
                 photo:url.value,
@@ -80,7 +88,7 @@ export default {
                 error.value = ''
             }, 2000);
         }
-        return { displayName, email, password, switchLogin, CreateAccount, error, url, fileImage, imageLoading };
+        return { displayName, email, password, switchLogin, CreateAccount, error, url, fileImage, imageLoading, image, label };
     }
 }
 </script>

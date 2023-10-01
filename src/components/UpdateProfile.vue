@@ -11,10 +11,10 @@
             <label >Email</label>
             <input type="email" required v-model="email">
             <label>Upload Image</label>
-            <input type="file" id="file" accept="image/*" @change="fileImage">
+            <input type="file" id="file" accept="image/*" ref="image" @change="fileImage">
             <div class="fileController flex items-center">
                 <font-awesome-icon icon="fa-solid fa-file-export" class="text-xl text-blue-400 hover:text-green-700" />
-                <label for="file">Choose a file</label>
+                <label for="file" ref="label">Choose a file</label>
             </div>
             <p class="text-center text-lg text-blue-500 font-bold py-2">{{ ImageLoad }}</p>
             <button class="font-bold hover:text-black">Update Profile</button>
@@ -33,25 +33,34 @@ export default {
         const name=ref('');
         let router = useRouter();
         let ImageLoad = ref('');
+        const image = ref(null);
+        const label = ref(null);
 
         let url=ref('https://i.pinimg.com/564x/3f/9f/5b/3f9f5b8c9f31ce16c79d48b9eeda4de0.jpg');
         
         let fileImage =async (e) => {
-            let res = await uploadBytes(storageReference(storage,`updateProfile/${e.target.files[0].name}`),e.target.files[0]);
+            const imgPath = image.value.files[0].name;
+            label.value.classList.add('text-xs');
+            label.value.innerText = imgPath;  
+            console.log(user.value)
+        };
+
+        let profileSubmit =async () => {
+            //store image
+            const storageRef = storageReference(storage,`updateProfile/${image.value.files[0].name}`);
+            const file = image.value.files[0];
+            let res = await uploadBytes(storageRef,file);
             if(res){
                 ImageLoad.value = 'Image is Loading! Please wait a moment.'
             }
 
-            let getUrl = await getDownloadURL(storageReference(storage,`updateProfile/${e.target.files[0].name}`));
+            let getUrl = await getDownloadURL(storageRef);
             url.value=getUrl;
             if(getUrl){
                 ImageLoad.value=''
             }
-        }
-
-        let profileSubmit =async () => {
+            //update
             await updateEmail(user.value, email.value);
-
             await updateProfile(user.value,{
                 displayName:name.value,
                 photoURL:url.value
@@ -67,7 +76,7 @@ export default {
             email.value='',
             router.push('/')
         }
-        return { name, email, url, fileImage, profileSubmit, ImageLoad }
+        return { name, email, url, fileImage, profileSubmit, ImageLoad, image, label }
     }
 }
 </script>
