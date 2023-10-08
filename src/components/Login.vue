@@ -7,7 +7,9 @@
         <label>Password</label>
         <input type="password" required v-model="password">
         <p class="mt-2 text-center text-red-500 font-semibold">{{error}}</p>
-        <button class="font-bold">Login</button>
+        <button class="font-bold">
+            <span ref="span">Login</span>
+        </button>
         <p class="text-center text-lg md:text-xl  mt-2 font-bold">If you haven't an account?<span class="text-blue-700 cursor-pointer" @click="switchSignIn"> SignIn</span> here</p>
     </form>
 </template>
@@ -21,6 +23,7 @@ export default {
     setup(props,context){
         let email = ref('');
         let password = ref('');
+        const span = ref(null);
 
         let switchSignIn= () => {
             context.emit('switchSignIn');
@@ -29,13 +32,21 @@ export default {
         let router = useRouter();
         let { error, LoginAccount } = signInAccount();
         let Login =async () => {
-            await LoginAccount(email.value, password.value);
+            //add spin
+            span.value.innerText = '';
+            span.value.classList.add('loading');
+            const res = await LoginAccount(email.value, password.value);
+            //add spin
+            span.value.innerText = 'Login';
+            span.value.classList.remove('loading');
             email.value = '',
             password.value = ''
-            router.push('/');
+            if(res){
+                router.push('/');
+            }
         }
         
-        return { email, password, switchSignIn, Login, error };
+        return { email, password, switchSignIn, Login, error, span };
     }
 }
 </script>

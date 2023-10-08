@@ -5,7 +5,7 @@
         <div class="m-0 second text-white bg-gray-600 border rounded-md border-none mt-3" v-for="GetData in GetDatas" :key="GetData.id">
             <div class="flex p-2 items-center justify-between mb-3">
                 <div class="profile flex items-center">
-                    <img :src="GetData.imagePath" alt="">
+                    <img :src="GetData.imagePath" alt="" loading="lazy">
                     <span class="ml-1">{{GetData.userName}}</span>
                 </div>
                 <div class="editController">
@@ -24,7 +24,7 @@
             </div>
             <p class="mb-2 px-2" id="message">{{ GetData.message }}</p>
             <div v-if="GetData.postImage" class="postImage mb-3">
-                <img :src="GetData.postImage" alt="">
+                <img :src="GetData.postImage" alt="" loading="lazy">
             </div>  
             <div class="reactBox flex justify-between p-2">
                 <div class="react" @click="react($event,`like${GetData.id}`,'text-blue-400')">

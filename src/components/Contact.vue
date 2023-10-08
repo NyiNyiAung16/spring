@@ -6,7 +6,7 @@
         </div>
         <div class="scrollBar">
           <div class="contactBox flex items-center gap-2 mb-3 cursor-pointer" v-for="contact in contacts" :key="contact.id">
-            <img :src="contact.photo" alt="img">
+            <img :src="contact.photo" alt="img" loading="lazy">
             <span>{{ contact.userName }}</span>
           </div>
         </div>

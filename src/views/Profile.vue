@@ -68,7 +68,7 @@ export default {
         font-family: 'arima';
     }
     .icon{
-        color: rgb(36, 169, 169);
+        color: rgba(0, 0, 0, 0.7);
         transition: all 1s linear;
     }
     .icon:hover{

@@ -2,3 +2,16 @@
     font-family: 'arima';
     src: url(../assets/static/Arima-ExtraLight.ttf);
 }
+
+.loading{
+    display: block;
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+    border: 2px solid transparent;
+    border-top-color: white;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin {
+    from{transform: rotate(360deg);}
+}

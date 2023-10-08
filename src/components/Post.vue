@@ -2,7 +2,7 @@
     <div class="mt-3 bg-gray-600 px-3 py-2 border rounded-md border-none box-border">
         <div class="first flex justify-between ">
             <img :src="photoUrl" alt="">
-            <input type="text" :placeholder="`What are you thinking?...${profileName}`" v-model="post" @keypress.enter="postData" class="w-full">
+            <input type="text" :placeholder="`What are you thinking?...${profileName}`" v-model="post" @keypress.enter="postData" class="w-full" @focus="switchPostModal">
             <div class="create flex items-center cursor-pointer">
                 <label for="image" class="ml-1 text-gray-300 text-sm md:text-lg cursor-pointer">
                     <div v-if="!icon">
@@ -57,7 +57,11 @@ export default {
             }  
         };
 
-        return {post, postData, photoUrl, profileName, postImage, url, icon}
+        const switchPostModal = () => {
+            console.log('switch')
+        }
+
+        return {post, postData, photoUrl, profileName, postImage, url, icon, switchPostModal, user }
     }
 }
 </script>

@@ -8,8 +8,6 @@
         <div>
             <label>Name</label>
             <input type="text" required v-model="name">
-            <label >Email</label>
-            <input type="email" required v-model="email">
             <label>Upload Image</label>
             <input type="file" id="file" accept="image/*" ref="image" @change="fileImage">
             <div class="fileController flex items-center">
@@ -17,7 +15,9 @@
                 <label for="file" ref="label">Choose a file</label>
             </div>
             <p class="text-center text-lg text-blue-500 font-bold py-2">{{ ImageLoad }}</p>
-            <button class="font-bold hover:text-black">Update Profile</button>
+            <button class="font-bold hover:text-black">
+                <span ref="span">Update Profile</span>
+            </button>
         </div>
     </form>
 </template>
@@ -29,23 +29,27 @@ import { useRouter } from 'vue-router'
 import { storage, uploadBytes , getDownloadURL, ref as storageReference, updateEmail, updateProfile,updateDoc, doc, db, auth} from '../firebase/config'
 export default {
     setup(){
-        const email=ref('');
         const name=ref('');
         let router = useRouter();
         let ImageLoad = ref('');
         const image = ref(null);
         const label = ref(null);
+        const span = ref(null);
 
         let url=ref('https://i.pinimg.com/564x/3f/9f/5b/3f9f5b8c9f31ce16c79d48b9eeda4de0.jpg');
         
         let fileImage =async (e) => {
             const imgPath = image.value.files[0].name;
-            label.value.classList.add('text-xs');
             label.value.innerText = imgPath;  
-            console.log(user.value)
+            label.value.className = 'text-xs';
+            console.log(span.value)
         };
 
         let profileSubmit =async () => {
+            //spin
+            span.value.innerText = '';
+            span.value.classList.add('loading');
+
             //store image
             const storageRef = storageReference(storage,`updateProfile/${image.value.files[0].name}`);
             const file = image.value.files[0];
@@ -60,7 +64,6 @@ export default {
                 ImageLoad.value=''
             }
             //update
-            await updateEmail(user.value, email.value);
             await updateProfile(user.value,{
                 displayName:name.value,
                 photoURL:url.value
@@ -71,12 +74,13 @@ export default {
                 userName:name.value,
                 photo:url.value
             });
-
+            //remove spin
+            span.value.innerText = 'Update Profile';
+            span.value.classList.remove('loading');
             name.value='',
-            email.value='',
             router.push('/')
         }
-        return { name, email, url, fileImage, profileSubmit, ImageLoad, image, label }
+        return { name, url, fileImage, profileSubmit, ImageLoad, image, label, span }
     }
 }
 </script>
@@ -131,7 +135,7 @@ export default {
         display: none;
     }
     .fileController {
-        max-width: 200px;
+        /* max-width: 200px; */
         text-align: center;
         background-color: gray;
         padding:3px 10px;

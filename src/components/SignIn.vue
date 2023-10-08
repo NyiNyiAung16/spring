@@ -19,7 +19,9 @@
             </div>
             <p class="text-center text-lg text-blue-500 font-bold py-2">{{ imageLoading }}</p>
             <p class="text-center text-red-500 font-bold mt-2">{{error}}</p>
-            <button class="signIn font-bold" type="submit">SignIn</button>
+            <button class="signIn font-bold" type="submit" style="width: 80px;">
+                <span ref="span" class="mx-auto">SignIn</span>
+            </button>
             <p class="text-center text-md md:text-xl mt-2 font-bold">If you have already an account?<span class="text-blue-700 cursor-pointer" @click="switchLogin"> Login</span> here</p>
         </div>
     </form>
@@ -38,6 +40,7 @@ export default {
         let password = ref('');
         const image = ref(null);
         const label = ref(null);
+        const span = ref(null);
 
         let switchLogin = () => {
             context.emit('switchLogin');
@@ -50,12 +53,15 @@ export default {
             const imgPath = image.value.files[0].name;
             label.value.classList.add('text-xs');
             label.value.innerText = imgPath;
-        }
+        };
 
         //submit siginform
         let router = useRouter();
         let {error,SignIn} = createUser();
         let CreateAccount = async() => {
+            //add spin
+            span.value.innerText = '';
+            span.value.classList.add('loading');
             //image
             const storageRef = storageReference(storage,`profileImages/${image.value.files[0].name}`);
             const file = image.value.files[0];
@@ -77,6 +83,9 @@ export default {
                 time:serverTimestamp()
             });
             }
+            //remvoe spin
+            span.value.innerText = 'SignIn';
+            span.value.classList.remove('loading');
             email.value='',
             password.value='',
             displayName.value='',
@@ -88,7 +97,7 @@ export default {
                 error.value = ''
             }, 2000);
         }
-        return { displayName, email, password, switchLogin, CreateAccount, error, url, fileImage, imageLoading, image, label };
+        return { displayName, email, password, switchLogin, CreateAccount, error, url, fileImage, imageLoading, image, label, span };
     }
 }
 </script>
@@ -148,7 +157,7 @@ export default {
     }
 
     .fileController {
-        max-width: 200px;
+        /* max-width: 200px; */
         padding:1px 10px;
         margin-top: 10px;
         border-radius: 5px;
@@ -167,7 +176,6 @@ export default {
     .first img{
         width: 100px;
         height: 100px;
-        border: 1px solid green;
         border-radius: 50%;
         object-fit: cover;
     }

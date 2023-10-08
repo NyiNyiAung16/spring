@@ -1,7 +1,7 @@
 <template>
     <div class="flex gap-2 mt-1">
             <div class="postBox">
-                <img :src="photoUrl" alt="img1">
+                <img :src="photoUrl" alt="img1" loading="lazy">
                 <input type="file" accept="imgae/jpg" id="storiesImage" class="hidden" @change="postStoriesImg">
                 <label for="storiesImage">
                     <font-awesome-icon icon="fa-solid fa-plus" class="plus text-white text-lg cursor-pointer  bg-green-300 border rounded-2xl p-1 transition hover:bg-green-500 ease-in" />

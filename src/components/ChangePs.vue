@@ -9,7 +9,9 @@
             <input type="password" required v-model="newPassword">
             <p class="text-lg text-gray-400 mt-2 hover:text-red-400 cursor-pointer" @click="ResetPassword">Reset Password</p>
             <p class="text-md text-green-400 mt-1">{{reset}}</p>
-            <button class="font-bold">Update</button>
+            <button class="font-bold">
+                <span ref="span">Update</span>
+            </button>
         </form>
     </div>
 </template>
@@ -23,15 +25,22 @@ export default {
         const oldPassword = ref('');
         const newPassword = ref('');
         const reset = ref('');
+        const span = ref(null);
         let router = useRouter();
         let user = auth.currentUser;
         
         let update =async () => {
-            let res = await updatePassword(user, newPassword.value);
+            //add spin
+            span.value.innerText = '';
+            span.value.classList.add('loading');
+            await updatePassword(user, newPassword.value);
+            //remvoe spin
+            span.value.innerText = 'Update';
+            span.value.classList.remove('loading');
             oldPassword.value='',
             newPassword.value='',
             router.push('/')
-        }
+        };
 
         //forget password
         let ResetPassword =async () => {
@@ -39,11 +48,10 @@ export default {
             reset.value = 'password reset is done! Go to Email and Check it out';
             setTimeout(()=>{
                 reset.value=''
-            },2000)
-           
+            },2000) 
         }
 
-        return { oldPassword, newPassword, ResetPassword, update, reset }
+        return { oldPassword, newPassword, ResetPassword, update, reset, span }
     }
 }
 </script>
