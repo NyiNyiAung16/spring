@@ -11,8 +11,8 @@
                 <label for="video" class="text-blue-300 text-lg cursor-pointer hover:text-blue-600 transition linear">Post Video</label>
             </div>
         </div>
-        <div class="loading" v-if="progressCheck">
-            <div class="spin"></div>
+        <div v-if="progressCheck">
+            <div class="loading mx-auto block text-blue-500" ></div>
         </div>
   </div>
 </template>
@@ -102,7 +102,7 @@ export default {
         text-align: center;
         background-color: rgb(64, 69, 69);
     }
-    .loading .spin{
+    /* .loading .spin{
         width: 20px;
         height: 20px;
         border-radius: 50%;
@@ -114,7 +114,7 @@ export default {
     }
     @keyframes spin {
         to{ transform: rotate(360deg); }
-    }
+    } */
     span,label{
         font-family: 'arima';
     }

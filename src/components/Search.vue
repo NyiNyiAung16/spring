@@ -19,7 +19,7 @@
                         <span class="text-blue-400 text-lg">{{name.userName}}</span>
                     </div>
                     <div>
-                        <font-awesome-icon icon="fa-solid fa-xmark" size="lg" class="text-white hover:text-red-700 cursor-pointer" @click="searchData=false" />
+                        <font-awesome-icon icon="fa-solid fa-xmark" size="lg" class="text-white hover:text-red-700 cursor-pointer" @click="removeUser(name.id)" />
                     </div>
                 </div>
             </div>
@@ -54,21 +54,33 @@ export default {
             filterUsers.value = results.value;
         });
 
-        let searchName = ref('');
-        let searchImgUrl = ref('');
+        function findMatches(wordToMatch, filterUsers){
+            if(wordToMatch){
+                const regex = new RegExp(wordToMatch,'gi');
+                return filterUsers.filter((user)=>{
+                    return user.userName.match(regex);
+                });
+            }else{
+                return null;
+            }
+        }
+
         let filterNames = ref([]);
         let searchUser = (name) => {
             searchData.value = true;
-            let filterName = filterUsers.value.filter((user) => {
-                return user.userName === name;
-            })
-            if(filterName.length > 0){
-                NothingSearch.value = false;
-                filterNames.value = filterName;
-            }else{
-                searchData.value = false;
+            filterNames.value = findMatches(name, filterUsers.value);
+
+            if(filterNames.value < 1){
                 NothingSearch.value = true;
-            } 
+            }else{
+                NothingSearch.value = false;
+            }
+        }
+
+        const removeUser = (id) =>{
+            filterNames.value = filterNames.value.filter((user)=> {
+                return user.id !== id;
+            } )
         }
 
         const hideNavIcon = () => {
@@ -78,7 +90,7 @@ export default {
         }
 
 
-        return{filterUsers, searchData, searchUser, searchName, searchImgUrl, filterNames, smallSearch, NothingSearch, searchFilter, hideNavIcon }
+        return{filterUsers, searchData, searchUser, filterNames, smallSearch, NothingSearch, searchFilter, hideNavIcon, removeUser }
     }
 }
 
